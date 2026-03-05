@@ -25,3 +25,11 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: Code quality
+
+### Jess
+
+<img src="images/blahblahlolhahaha.png" width="200px">
+
+[[github](http://github.com/blahblahlolhahaha)]
+* Role: Developer
+* Responsibilities: Code
