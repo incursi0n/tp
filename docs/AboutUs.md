@@ -9,44 +9,39 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### bitxer
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/bitxer.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Project Advisor
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/bitxer)]
 
 * Role: Team Lead
 * Responsibilities: UI
 
-### Johnny Doe
+### Jia Wen
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/incursi0n.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](https://github.com/incursi0n)]
 
-* Role: Developer
-* Responsibilities: Data
+* Role: Project Advisor
 
-### Jean Doe
+### Marcus
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/lolepop.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/lolepop)]
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: Code quality
+
+### Jess
+
+<img src="images/blahblahlolhahaha.png" width="200px">
+
+[[github](http://github.com/blahblahlolhahaha)]
+* Role: Developer
+* Responsibilities: Code
 
 ### David-The-Programmer
 
@@ -56,3 +51,4 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
