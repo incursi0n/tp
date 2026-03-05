@@ -43,6 +43,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Code
 
+### Qirui
+
+<img src="images/eokwingster.png" width="200px">
+
+[[github](http://github.com/EOKwingster)]
+* Role: Developer
+* Responsibilities: Code
+
 ### David-The-Programmer
 
 <img src="images/david-the-programmer.png" width="200px">
