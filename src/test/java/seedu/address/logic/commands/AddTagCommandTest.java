@@ -24,20 +24,20 @@ import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
 public class AddTagCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private static final HashSet<Tag> TAGS_TO_ADD = new HashSet<>(List.of(new Tag("lab1"), new Tag("tut5")));
 
-    final HashSet<Tag> TAGS_TO_ADD = new HashSet<>(List.of(new Tag("lab1"), new Tag("tut5")));
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void addTag_normal_success() {
-        final HashSet<Tag> TAGS_TO_EXPECT = new HashSet<>(TAGS_TO_ADD);
-        TAGS_TO_EXPECT.addAll(BENSON.getTags());
+        final HashSet<Tag> tagsToExpect = new HashSet<>(TAGS_TO_ADD);
+        tagsToExpect.addAll(BENSON.getTags());
 
         Person personToEdit = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         AddTagCommand addTagCommand = new AddTagCommand(INDEX_SECOND_PERSON, TAGS_TO_ADD);
 
         Person editedPerson = personToEdit.cloneInto(p -> {
-            p.setTags(TAGS_TO_EXPECT);
+            p.setTags(tagsToExpect);
         });
 
         String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_SUCCESS, Messages.format(editedPerson));
@@ -52,14 +52,14 @@ public class AddTagCommandTest {
     public void addTag_filteredList_success() {
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
 
-        final HashSet<Tag> TAGS_TO_EXPECT = new HashSet<>(TAGS_TO_ADD);
-        TAGS_TO_EXPECT.addAll(BENSON.getTags());
+        final HashSet<Tag> tagsToExpect = new HashSet<>(TAGS_TO_ADD);
+        tagsToExpect.addAll(BENSON.getTags());
 
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         AddTagCommand addTagCommand = new AddTagCommand(INDEX_FIRST_PERSON, TAGS_TO_ADD);
 
         Person editedPerson = personToEdit.cloneInto(p -> {
-            p.setTags(TAGS_TO_EXPECT);
+            p.setTags(tagsToExpect);
         });
 
         String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_SUCCESS, Messages.format(editedPerson));

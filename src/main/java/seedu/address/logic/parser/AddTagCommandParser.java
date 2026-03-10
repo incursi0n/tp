@@ -18,7 +18,7 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of AddTagCommand
      * and returns an AddTagCommand object for execution.
-     * 
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddTagCommand parse(String args) throws ParseException {

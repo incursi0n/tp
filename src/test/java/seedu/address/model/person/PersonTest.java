@@ -112,7 +112,7 @@ public class PersonTest {
     }
 
     private class InteriorMutable {
-        public MutablePerson inner;
+        protected MutablePerson inner;
     }
 
 }

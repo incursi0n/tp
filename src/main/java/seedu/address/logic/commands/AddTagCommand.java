@@ -34,7 +34,8 @@ public class AddTagCommand extends Command {
     //@formatter:on
 
     public static final String MESSAGE_ADD_SUCCESS = "Successfully added tag(s) to Person: %1$s";
-    public static final String MESSAGE_WARNING_DUPLICATE = "WARNING, the following tags were ignored as they already exist: %1$s";
+    public static final String MESSAGE_WARNING_DUPLICATE = "WARNING, the following tags were ignored"
+            + "as they already exist: %1$s";
 
     private Index targetPersonIndex;
     private Set<Tag> tagsToAdd;
@@ -71,7 +72,7 @@ public class AddTagCommand extends Command {
         var outMessage = String.format(MESSAGE_ADD_SUCCESS, Messages.format(editedPerson))
                 + formatDuplicateTagMessage(duplicatedTags);
 
-        // FIXME: is there any expectation to reset the model's filtered view after
+        // TODO: is there any expectation to reset the model's filtered view after
         // execution?
         return new CommandResult(outMessage);
     }
