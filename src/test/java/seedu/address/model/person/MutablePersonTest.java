@@ -21,6 +21,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.person.Person.MutablePerson;
 import seedu.address.model.person.exceptions.ImmutableEscapedScopeException;
 import seedu.address.model.tag.Tag;
 
