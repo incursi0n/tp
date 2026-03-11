@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
@@ -15,6 +16,8 @@ import static seedu.address.testutil.TypicalPersons.BOB;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.model.person.Person.MutablePerson;
+import seedu.address.model.person.exceptions.ImmutableEscapedScopeException;
 import seedu.address.testutil.PersonBuilder;
 
 public class PersonTest {
@@ -50,6 +53,18 @@ public class PersonTest {
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
         assertFalse(BOB.isSamePerson(editedBob));
+    }
+
+    @Test
+    public void immutabilityIsPreserved() {
+        final var ref = new InteriorMutable();
+        ALICE.cloneInto(p -> {
+            ref.inner = p;
+        });
+        assertTrue(ALICE.equals(ref.inner));
+        assertThrows(ImmutableEscapedScopeException.class, () -> {
+            ref.inner.setName(new Name("this should fail"));
+        }, "Expected Person to be immutable after escaping scope");
     }
 
     @Test
@@ -102,4 +117,9 @@ public class PersonTest {
                 + ", role=" + ALICE.getRole() + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }
+
+    private class InteriorMutable {
+        protected MutablePerson inner;
+    }
+
 }
