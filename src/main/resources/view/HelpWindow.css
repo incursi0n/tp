@@ -1,17 +1,12 @@
-#copyButton, #helpMessage {
+#helpMessage {
     -fx-text-fill: white;
+    -fx-control-inner-background: derive(#1d1d1d, 20%);
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 13px;
 }
 
-#copyButton {
-    -fx-background-color: dimgray;
-}
-
-#copyButton:hover {
-    -fx-background-color: gray;
-}
-
-#copyButton:armed {
-    -fx-background-color: darkgray;
+#helpMessage .content {
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 #helpMessageContainer {

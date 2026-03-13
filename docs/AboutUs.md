@@ -25,6 +25,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/incursi0n)]
 
 * Role: Project Advisor
+* Responsibilities: UI
 
 ### Marcus
 
