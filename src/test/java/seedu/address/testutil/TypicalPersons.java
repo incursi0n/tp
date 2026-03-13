@@ -6,8 +6,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_AMY;
@@ -26,37 +25,42 @@ import seedu.address.model.person.Person;
 public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
-            .withUsername("alicepauline").withRole("Teaching Assistant").withEmail("alice@example.com")
+            .withUsername("alicepauline").withEmail("alice@example.com")
             .withPhone("94351253")
             .withTags("friends").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
-            .withUsername("bensonmeier").withRole("Teaching")
+            .withUsername("bensonmeier").withPosition("Professors")
             .withEmail("johnd@example.com").withPhone("98765432")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withUsername("carlkurz").withRole("Teaching Temp").build();
+            .withEmail("heinz@example.com").withUsername("carlkurz").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withUsername("danielmeier").withRole("Teaching Assistant")
+            .withEmail("cornelia@example.com").withUsername("danielmeier")
+            .withPosition("Teaching Assistant")
             .withTags("friends").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("94822240")
-            .withEmail("werner@example.com").withUsername("ellemeyer").withRole("Teaching").build();
+            .withEmail("werner@example.com").withUsername("ellemeyer").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("94824270")
-            .withEmail("lydia@example.com").withUsername("fionakunz").withRole("Teaching Temp").build();
+            .withEmail("lydia@example.com").withUsername("fionakunz").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("94824420")
-            .withEmail("anna@example.com").withUsername("georgebest").withRole("Teaching Assistant").build();
+            .withEmail("anna@example.com").withUsername("georgebest")
+            .withPosition("Teaching Assistant").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84824240")
-            .withEmail("stefan@example.com").withUsername("hoonmeier").withRole("Teaching").build();
+            .withEmail("stefan@example.com").withUsername("hoonmeier").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("84821310")
-            .withEmail("hans@example.com").withUsername("idamueller").withRole("Teaching Temp").build();
+            .withEmail("hans@example.com").withUsername("idamueller").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
+    // AMY is a student (no position)
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withUsername(VALID_USERNAME_AMY).withRole(VALID_ROLE_AMY)
+            .withEmail(VALID_EMAIL_AMY).withUsername(VALID_USERNAME_AMY)
             .withTags(VALID_TAG_FRIEND).build();
+    // BOB is a teaching staff (has position)
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withUsername(VALID_USERNAME_BOB).withRole(VALID_ROLE_BOB)
+            .withEmail(VALID_EMAIL_BOB).withUsername(VALID_USERNAME_BOB)
+            .withPosition(VALID_POSITION_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

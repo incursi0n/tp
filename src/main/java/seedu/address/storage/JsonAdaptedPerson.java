@@ -14,22 +14,29 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Role;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.TeachingStaff;
 import seedu.address.model.person.Username;
 import seedu.address.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Person}.
+ * Serialises as either student or staff (teaching staff) with a type field.
  */
 class JsonAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    /** JSON type value for teaching staff. */
+    private static final String TYPE_STAFF = "staff";
+    /** JSON type value for student. */
+    private static final String TYPE_STUDENT = "student";
 
     private final String name;
     private final String phone;
     private final String email;
     private final String username;
-    private final String role;
+    private final String type;
+    private final String position;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -38,13 +45,14 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("username") String username,
-            @JsonProperty("role") String role,
+            @JsonProperty("type") String type, @JsonProperty("position") String position,
             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.username = username;
-        this.role = role;
+        this.type = type;
+        this.position = position;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -58,7 +66,13 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         username = source.getUsername().value;
-        role = source.getRole().value;
+        if (source instanceof TeachingStaff staff) {
+            type = TYPE_STAFF;
+            position = staff.getPosition().value;
+        } else {
+            type = TYPE_STUDENT;
+            position = null;
+        }
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -67,7 +81,8 @@ class JsonAdaptedPerson {
     /**
      * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
+     * @return A {@link Person} or {@link TeachingStaff} with the adapted data.
+     * @throws IllegalValueException If any data constraints are violated.
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
@@ -108,17 +123,24 @@ class JsonAdaptedPerson {
         }
         final Username modelUsername = new Username(username);
 
-        if (role == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Role.class.getSimpleName()));
-        }
-        if (!Role.isValidRole(role)) {
-            throw new IllegalValueException(Role.MESSAGE_CONSTRAINTS);
-        }
-        final Role modelRole = new Role(role);
-
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelUsername, modelRole, modelTags);
+
+        boolean isStaff = TYPE_STAFF.equals(type);
+        if (isStaff) {
+            if (position == null) {
+                throw new IllegalValueException(
+                        String.format(MISSING_FIELD_MESSAGE_FORMAT, Position.class.getSimpleName()));
+            }
+            if (!Position.isValidPosition(position)) {
+                throw new IllegalValueException(Position.MESSAGE_CONSTRAINTS);
+            }
+        }
+
+        if (isStaff) {
+            final Position modelPosition = new Position(position);
+            return new TeachingStaff(modelName, modelPhone, modelEmail, modelUsername, modelPosition, modelTags);
+        }
+        return new Person(modelName, modelPhone, modelEmail, modelUsername, modelTags);
     }
 
 }

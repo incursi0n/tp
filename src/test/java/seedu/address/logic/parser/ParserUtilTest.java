@@ -17,7 +17,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Role;
+import seedu.address.model.person.Position;
 import seedu.address.model.person.Username;
 import seedu.address.model.tag.Tag;
 
@@ -25,14 +25,14 @@ public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_USERNAME = " ";
-    private static final String INVALID_ROLE = " ";
+    private static final String INVALID_POSITION = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "12345678";
     private static final String VALID_USERNAME = "rachelwalker";
-    private static final String VALID_ROLE = "Teaching Assistant";
+    private static final String VALID_POSITION = "Teaching Assistant";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
@@ -129,26 +129,26 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseRole_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> ParserUtil.parseRole((String) null));
+    public void parsePosition_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parsePosition((String) null));
     }
 
     @Test
-    public void parseRole_invalidValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseRole(INVALID_ROLE));
+    public void parsePosition_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parsePosition(INVALID_POSITION));
     }
 
     @Test
-    public void parseRole_validValueWithoutWhitespace_returnsRole() throws Exception {
-        Role expectedRole = new Role(VALID_ROLE);
-        assertEquals(expectedRole, ParserUtil.parseRole(VALID_ROLE));
+    public void parsePosition_validValueWithoutWhitespace_returnsPosition() throws Exception {
+        Position expectedPosition = new Position(VALID_POSITION);
+        assertEquals(expectedPosition, ParserUtil.parsePosition(VALID_POSITION));
     }
 
     @Test
-    public void parseRole_validValueWithWhitespace_returnsTrimmedRole() throws Exception {
-        String roleWithWhitespace = WHITESPACE + VALID_ROLE + WHITESPACE;
-        Role expectedRole = new Role(VALID_ROLE);
-        assertEquals(expectedRole, ParserUtil.parseRole(roleWithWhitespace));
+    public void parsePosition_validValueWithWhitespace_returnsTrimmedPosition() throws Exception {
+        String positionWithWhitespace = WHITESPACE + VALID_POSITION + WHITESPACE;
+        Position expectedPosition = new Position(VALID_POSITION);
+        assertEquals(expectedPosition, ParserUtil.parsePosition(positionWithWhitespace));
     }
 
     @Test

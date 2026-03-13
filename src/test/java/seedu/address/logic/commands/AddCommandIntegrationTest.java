@@ -34,7 +34,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addPerson(validPerson);
 
         assertCommandSuccess(new AddCommand(validPerson), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+                String.format("New student added: %1$s", Messages.format(validPerson)),
                 expectedModel);
     }
 
@@ -54,7 +54,6 @@ public class AddCommandIntegrationTest {
                 .withPhone(personInList.getPhone().value)
                 .withEmail("unique@example.com")
                 .withUsername("uniqueuser")
-                .withRole("Student")
                 .build();
         assertCommandFailure(new AddCommand(personWithDuplicatePhone), model,
                 AddCommand.MESSAGE_DUPLICATE_PHONE);
@@ -69,7 +68,6 @@ public class AddCommandIntegrationTest {
                 .withPhone("11119999")
                 .withEmail(personInList.getEmail().value)
                 .withUsername("uniqueuser")
-                .withRole("Student")
                 .build();
         assertCommandFailure(new AddCommand(personWithDuplicateEmail), model,
                 AddCommand.MESSAGE_DUPLICATE_EMAIL);
@@ -84,7 +82,6 @@ public class AddCommandIntegrationTest {
                 .withPhone("11119999")
                 .withEmail("unique@example.com")
                 .withUsername(personInList.getUsername().value)
-                .withRole("Student")
                 .build();
         assertCommandFailure(new AddCommand(personWithDuplicateUsername), model,
                 AddCommand.MESSAGE_DUPLICATE_USERNAME);

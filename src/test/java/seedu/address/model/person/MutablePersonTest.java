@@ -9,8 +9,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ROLE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_BOB;
@@ -31,7 +29,7 @@ public class MutablePersonTest {
     @BeforeEach
     public void setup() {
         mutablePerson = new MutablePerson(new Name(VALID_NAME_AMY), new Phone(VALID_PHONE_AMY),
-                new Email(VALID_EMAIL_AMY), new Username(VALID_USERNAME_AMY), new Role(VALID_ROLE_AMY),
+                new Email(VALID_EMAIL_AMY), new Username(VALID_USERNAME_AMY),
                 new HashSet<>());
     }
 
@@ -41,14 +39,12 @@ public class MutablePersonTest {
         mutablePerson.setPhone(new Phone(VALID_PHONE_BOB));
         mutablePerson.setEmail(new Email(VALID_EMAIL_BOB));
         mutablePerson.setUsername(new Username(VALID_USERNAME_BOB));
-        mutablePerson.setRole(new Role(VALID_ROLE_BOB));
         mutablePerson.setTags(new HashSet<>(List.of(new Tag(VALID_TAG_FRIEND))));
 
         assertEquals(VALID_NAME_BOB, mutablePerson.getName().toString());
         assertEquals(VALID_PHONE_BOB, mutablePerson.getPhone().toString());
         assertEquals(VALID_EMAIL_BOB, mutablePerson.getEmail().toString());
         assertEquals(VALID_USERNAME_BOB, mutablePerson.getUsername().toString());
-        assertEquals(VALID_ROLE_BOB, mutablePerson.getRole().toString());
         assertTrue(mutablePerson.getTags().contains(new Tag(VALID_TAG_FRIEND)));
     }
 
@@ -68,10 +64,6 @@ public class MutablePersonTest {
 
         assertThrows(NullPointerException.class, () -> {
             mutablePerson.setUsername(null);
-        });
-
-        assertThrows(NullPointerException.class, () -> {
-            mutablePerson.setRole(null);
         });
 
         assertThrows(NullPointerException.class, () -> {
@@ -97,10 +89,6 @@ public class MutablePersonTest {
 
         assertThrows(ImmutableEscapedScopeException.class, () -> {
             mutablePerson.setUsername(new Username(VALID_USERNAME_BOB));
-        });
-
-        assertThrows(ImmutableEscapedScopeException.class, () -> {
-            mutablePerson.setRole(new Role(VALID_ROLE_BOB));
         });
 
         assertThrows(ImmutableEscapedScopeException.class, () -> {

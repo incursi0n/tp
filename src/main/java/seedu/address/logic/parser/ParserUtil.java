@@ -12,7 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Role;
+import seedu.address.model.person.Position;
 import seedu.address.model.person.Username;
 import seedu.address.model.tag.AbstractTag;
 import seedu.address.model.tag.Tag;
@@ -83,18 +83,18 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String role} into a {@code Role}.
+     * Parses a {@code String position} into a {@code Position}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code role} is invalid.
+     * @throws ParseException if the given {@code position} is invalid.
      */
-    public static Role parseRole(String role) throws ParseException {
-        requireNonNull(role);
-        String trimmedRole = role.trim();
-        if (!Role.isValidRole(trimmedRole)) {
-            throw new ParseException(Role.MESSAGE_CONSTRAINTS);
+    public static Position parsePosition(String position) throws ParseException {
+        requireNonNull(position);
+        String trimmedPosition = position.trim();
+        if (!Position.isValidPosition(trimmedPosition)) {
+            throw new ParseException(Position.MESSAGE_CONSTRAINTS);
         }
-        return new Role(trimmedRole);
+        return new Position(trimmedPosition);
     }
 
     /**

@@ -9,7 +9,8 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Role;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.TeachingStaff;
 import seedu.address.model.person.Username;
 import seedu.address.model.tag.Tag;
 
@@ -37,7 +38,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setUsername(person.getUsername());
-        descriptor.setRole(person.getRole());
+        if (person instanceof TeachingStaff staff) {
+            descriptor.setPosition(staff.getPosition());
+        }
         descriptor.setTags(person.getTags());
     }
 
@@ -74,10 +77,10 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Role} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Position} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withRole(String role) {
-        descriptor.setRole(new Role(role));
+    public EditPersonDescriptorBuilder withPosition(String position) {
+        descriptor.setPosition(new Position(position));
         return this;
     }
 

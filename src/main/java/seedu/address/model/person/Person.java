@@ -14,10 +14,10 @@ import seedu.address.model.person.exceptions.ImmutableEscapedScopeException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Person (student) in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public sealed class Person {
+public sealed class Person permits Person.MutablePerson, TeachingStaff {
 
     // Identity fields
     protected Name name;
@@ -26,19 +26,17 @@ public sealed class Person {
 
     // Data fields
     protected Username username;
-    protected Role role;
     protected Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Username username, Role role, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, username, role, tags);
+    public Person(Name name, Phone phone, Email email, Username username, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, username, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.username = username;
-        this.role = role;
         this.tags.addAll(tags);
     }
 
@@ -56,10 +54,6 @@ public sealed class Person {
 
     public Username getUsername() {
         return username;
-    }
-
-    public Role getRole() {
-        return role;
     }
 
     /**
@@ -103,14 +97,13 @@ public sealed class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && username.equals(otherPerson.username)
-                && role.equals(otherPerson.role)
                 && tags.equals(otherPerson.tags);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, username, role, tags);
+        return Objects.hash(name, phone, email, username, tags);
     }
 
     @Override
@@ -120,7 +113,6 @@ public sealed class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("username", username)
-                .add("role", role)
                 .add("tags", tags)
                 .toString();
     }
@@ -136,7 +128,7 @@ public sealed class Person {
      */
     public Person cloneInto(Consumer<MutablePerson> delegate) {
         requireNonNull(delegate);
-        var clonedPerson = new MutablePerson(name, phone, email, username, role, tags);
+        var clonedPerson = new MutablePerson(name, phone, email, username, tags);
         delegate.accept(clonedPerson);
         clonedPerson.markComplete();
         return clonedPerson;
@@ -162,8 +154,8 @@ public sealed class Person {
         // object cannot be modified in an outer scope
         private boolean isEditable = true;
 
-        MutablePerson(Name name, Phone phone, Email email, Username username, Role role, Set<Tag> tags) {
-            super(name, phone, email, username, role, tags);
+        MutablePerson(Name name, Phone phone, Email email, Username username, Set<Tag> tags) {
+            super(name, phone, email, username, tags);
         }
 
         public void setName(Name name) {
@@ -188,12 +180,6 @@ public sealed class Person {
             checkEditable();
             requireNonNull(username);
             this.username = username;
-        }
-
-        public void setRole(Role role) {
-            checkEditable();
-            requireNonNull(role);
-            this.role = role;
         }
 
         public void setTags(Set<Tag> tags) {

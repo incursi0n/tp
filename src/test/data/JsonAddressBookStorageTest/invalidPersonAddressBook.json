@@ -4,6 +4,7 @@
     "phone": "94824240",
     "email": "hans@example.com",
     "username": "hansmuster",
-    "role": "Student"
+    "type": "student",
+    "position": null
   } ]
 }

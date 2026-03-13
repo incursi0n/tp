@@ -22,7 +22,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.TeachingStaff;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -39,7 +41,7 @@ public class AddCommandTest {
 
         CommandResult commandResult = new AddCommand(validPerson).execute(modelStub);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertEquals(String.format("New student added: %1$s", Messages.format(validPerson)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
@@ -92,6 +94,42 @@ public class AddCommandTest {
 
         assertThrows(CommandException.class,
                 AddCommand.MESSAGE_DUPLICATE_USERNAME, () -> addCommand.execute(modelStub));
+    }
+
+    // ===================== Teaching staff (tutor) edge cases =====================
+
+    @Test
+    public void execute_teachingStaffAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person validStaff = new PersonBuilder().withName("Dr Jane").withPosition("Teaching Assistant").build();
+
+        CommandResult commandResult = new AddCommand(validStaff).execute(modelStub);
+
+        assertEquals(String.format("New teaching staff added: %1$s", Messages.format(validStaff)),
+                commandResult.getFeedbackToUser());
+        assertEquals(Arrays.asList(validStaff), modelStub.personsAdded);
+        assertTrue(modelStub.personsAdded.get(0) instanceof TeachingStaff);
+    }
+
+    @Test
+    public void execute_duplicateTeachingStaff_throwsCommandException() {
+        Person validStaff = new PersonBuilder().withName("Dr Jane").withPosition("Professors").build();
+        AddCommand addCommand = new AddCommand(validStaff);
+        ModelStub modelStub = new ModelStubWithPerson(validStaff);
+
+        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_teachingStaffWithNameOnly_addSuccessful() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person staffNameOnly = new TeachingStaff(new Name("Single Name"));
+
+        CommandResult commandResult = new AddCommand(staffNameOnly).execute(modelStub);
+
+        assertTrue(commandResult.getFeedbackToUser().contains("teaching staff"));
+        assertEquals(1, modelStub.personsAdded.size());
+        assertTrue(modelStub.personsAdded.get(0) instanceof TeachingStaff);
     }
 
     @Test

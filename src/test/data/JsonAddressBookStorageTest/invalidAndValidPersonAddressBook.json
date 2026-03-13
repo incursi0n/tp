@@ -4,12 +4,14 @@
     "phone": "94824240",
     "email": "hans@example.com",
     "username": "validperson",
-    "role": "Student"
+    "type": "student",
+    "position": null
   }, {
     "name": "Person With Invalid Phone Field",
     "phone": "948asdf2424",
     "email": "hans@example.com",
     "username": "invalidphoneperson",
-    "role": "Student"
+    "type": "student",
+    "position": null
   } ]
 }

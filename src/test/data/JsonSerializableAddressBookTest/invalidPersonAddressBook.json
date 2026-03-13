@@ -4,6 +4,7 @@
     "phone": "9482424",
     "email": "invalid@email!3e",
     "username": "hans_muster",
-    "role": "Student"
+    "type": "student",
+    "position": null
   } ]
 }

@@ -4,13 +4,15 @@
     "phone": "94351253",
     "email": "alice@example.com",
     "username": "alicepauline",
-    "role": "Teaching Assistant",
+    "type": "student",
+    "position": null,
     "tags": [ "friends" ]
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
     "username": "alicepauline2",
-    "role": "Student"
+    "type": "student",
+    "position": null
   } ]
 }
