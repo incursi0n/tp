@@ -13,6 +13,7 @@
     "email": "pauline@example.com",
     "username": "alicepauline2",
     "type": "student",
-    "position": null
+    "position": null,
+    "tags": []
   } ]
 }

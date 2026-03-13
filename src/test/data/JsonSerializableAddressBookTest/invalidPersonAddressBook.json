@@ -5,6 +5,7 @@
     "email": "invalid@email!3e",
     "username": "hans_muster",
     "type": "student",
-    "position": null
+    "position": null,
+    "tags": []
   } ]
 }

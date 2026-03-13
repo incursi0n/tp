@@ -5,13 +5,15 @@
     "email": "hans@example.com",
     "username": "validperson",
     "type": "student",
-    "position": null
+    "position": null,
+    "tags": []
   }, {
     "name": "Person With Invalid Phone Field",
     "phone": "948asdf2424",
     "email": "hans@example.com",
     "username": "invalidphoneperson",
     "type": "student",
-    "position": null
+    "position": null,
+    "tags": []
   } ]
 }

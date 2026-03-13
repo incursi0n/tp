@@ -5,6 +5,7 @@
     "email": "hans@example.com",
     "username": "hansmuster",
     "type": "student",
-    "position": null
+    "position": null,
+    "tags": []
   } ]
 }
