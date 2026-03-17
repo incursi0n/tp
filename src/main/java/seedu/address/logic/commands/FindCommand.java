@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Objects;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
@@ -14,7 +14,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.TagsContainsTagPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
+ * Finds and lists all persons in address book whose name contains any of the
+ * argument keywords.
  * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
@@ -22,9 +23,12 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "the specified keywords and/or who have any of the specified tags. "
+            + "Parameters: "
+            + "[KEYWORD [MORE_KEYWORDS]...] "
+            + "[" + PREFIX_TAG + "TAG [MORE_TAGS]...]\n"
+            + "Note: At least one of KEYWORD or TAG must be provided.\n"
+            + "Example: " + COMMAND_WORD + " alice bob " + PREFIX_TAG + "friends";
 
     private final NameContainsKeywordsPredicate namePredicate;
     private final TagsContainsTagPredicate tagPredicate;

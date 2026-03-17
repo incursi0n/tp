@@ -123,7 +123,8 @@ public class FindCommandTest {
 
     @Test
     public void equals_withTagPredicate() {
-        NameContainsKeywordsPredicate namePredicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alice"));
+        NameContainsKeywordsPredicate namePredicate = new NameContainsKeywordsPredicate(
+                Collections.singletonList("Alice"));
         TagsContainsTagPredicate tagPredicate = new TagsContainsTagPredicate(Set.of(new Tag("colleague")));
 
         FindCommand commandWithBoth = new FindCommand(namePredicate, tagPredicate);

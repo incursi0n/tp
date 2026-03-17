@@ -55,7 +55,7 @@ public class FindCommandParserTest {
     public void parse_validArgsWithTagOnly_returnsFindCommand() {
         // tag only, no name keywords
         FindCommand expectedFindCommand = new FindCommand(
-               null,
+                null,
                 new TagsContainsTagPredicate(Set.of(new Tag("friends"))));
         assertParseSuccess(parser, " t/friends", expectedFindCommand);
     }
