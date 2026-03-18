@@ -40,7 +40,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         NameContainsKeywordsPredicate namePredicate = null;
         TagsContainsTagPredicate tagPredicate = null;
-        
+
         if (!preamble.isEmpty()) {
             namePredicate = new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords));
         }
