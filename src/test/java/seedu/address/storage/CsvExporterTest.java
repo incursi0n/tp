@@ -35,7 +35,7 @@ public class CsvExporterTest {
     public Path tempDir;
 
     @Test
-    public void convertToCSV_studentWithoutTags_returnsValidCSVFormat() {
+    public void convertToCsv_studentWithoutTags_returnsValidCsvFormat() {
         Person student = new PersonBuilder()
                 .withName("John Doe")
                 .withPhone("91234567")
@@ -50,7 +50,7 @@ public class CsvExporterTest {
     }
 
     @Test
-    public void convertToCSV_studentWithTags_includesTagsInCSV() {
+    public void convertToCsv_studentWithTags_includesTagsInCsv() {
         Person student = new PersonBuilder()
                 .withName("Alice Smith")
                 .withPhone("81234567")
@@ -67,7 +67,7 @@ public class CsvExporterTest {
     }
 
     @Test
-    public void convertToCSV_teachingStaffWithoutAvailability_returnsValidCSVFormat() {
+    public void convertToCsv_teachingStaffWithoutAvailability_returnsValidCsvFormat() {
         TeachingStaff staff = (TeachingStaff) new PersonBuilder()
                 .withName("Prof Benson")
                 .withPhone("87654321")
@@ -83,7 +83,7 @@ public class CsvExporterTest {
     }
 
     @Test
-    public void convertToCSV_teachingStaffWithAvailability_includesTimeSlots() {
+    public void convertToCsv_teachingStaffWithAvailability_includesTimeSlots() {
         TimeSlot slot1 = new TimeSlot("mon-10-12");
         TimeSlot slot2 = new TimeSlot("wed-14-16");
 
@@ -152,7 +152,7 @@ public class CsvExporterTest {
     }
 
     @Test
-    public void exportContacts_invalidParentDirectory_throwsIOException() {
+    public void exportContacts_invalidParentDirectory_throwsIoException() {
         Model model = new ModelManager();
         model.addPerson(ALICE);
 
@@ -199,7 +199,7 @@ public class CsvExporterTest {
     }
 
     @Test
-    public void convertToCSV_outputContainsAllRequiredFields() {
+    public void convertToCsv_outputContainsAllRequiredFields() {
         Person person = new PersonBuilder()
                 .withName("Test Person")
                 .withPhone("12345678")
