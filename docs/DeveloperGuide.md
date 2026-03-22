@@ -91,12 +91,18 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <img src="images/LogicClassDiagram.png" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagrams below illustrate the interactions within the `Logic` component for two representative commands.
 
-![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
+**Adding a student** (`execute("add n/John p/91234567 e/john@example.com u/john1")`):
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
+![Interactions Inside the Logic Component for the `add` Command](images/AddSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `AddCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
+
+**Listing all contacts** (`execute("list")`):
+
+![Interactions Inside the Logic Component for the `list` Command](images/ListSequenceDiagram.png)
 
 How the `Logic` component works:
 
@@ -117,7 +123,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.png" width="450" />
+<img src="images/ModelClassDiagram.png" width="500" />
 
 
 The `Model` component,
@@ -191,9 +197,20 @@ The feature is implemented across the following components:
 * `JsonAdaptedTimeSlot` — Serialises a `TimeSlot` as its string representation (e.g., `"mon-10-12"`) using `@JsonValue`.
 * `JsonAdaptedPerson` — Extended with a `List<JsonAdaptedTimeSlot> availability` field, serialised only for staff-type persons.
 
-The following sequence diagram shows how the `tutorslot 1 mon-10-12` command is executed:
+The following activity diagram summarises the decision flow when `tutorslot` is executed:
+
+![TutorSlotActivityDiagram](images/TutorSlotActivityDiagram.png)
+
+The following sequence diagram shows how the `tutorslot 1 mon-10-12` command flows through the `Logic` component:
 
 ![TutorSlotSequenceDiagram](images/TutorSlotSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `TutorSlotCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+</div>
+
+The object diagram below shows an example state of a `TeachingStaff` object after two `tutorslot` commands have been executed:
+
+![TutorAvailabilityObjectDiagram](images/TutorAvailabilityObjectDiagram.png)
 
 #### Viewing Availability: `tutordashboard`
 
@@ -205,6 +222,10 @@ Key design decisions:
 * **Sorted display** — slots for each staff member are inserted into a `TreeSet`, which uses `TimeSlot`'s natural ordering (day-of-week first, then start time) via its `Comparable` implementation.
 * **No model mutation** — the command produces only a `CommandResult`; it does not modify any data.
 * **No parser needed** — the command takes no arguments and is returned directly by `AddressBookParser`.
+
+The following sequence diagram shows how the `tutordashboard` command is executed:
+
+![TutorDashboardSequenceDiagram](images/TutorDashboardSequenceDiagram.png)
 
 #### Design Considerations
 

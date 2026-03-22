@@ -20,6 +20,7 @@ Class Name
 Class Phone
 Class Username
 Class Position
+Class TimeSlot
 Class AbstractTag
 
 Class I #FFFFFF
@@ -47,6 +48,7 @@ Person *--> "*" AbstractTag
 
 TeachingStaff -up-|> Person
 TeachingStaff *--> Position
+TeachingStaff *--> "*" TimeSlot
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
