@@ -1,7 +1,7 @@
 package seedu.address.storage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -200,15 +200,13 @@ public class CsvExporterTest {
                 .build();
 
         String csv = CsvExporter.convertToCsv(person);
-
         // Verify CSV format contains all required fields in correct order
-        assertAll(
-                () -> assertTrue(csv.startsWith("Student,")),
-                () -> assertTrue(csv.contains("Test Person")),
-                () -> assertTrue(csv.contains("12345678")),
-                () -> assertTrue(csv.contains("testuser")),
-                () -> assertTrue(csv.contains("test@example.com")),
-                () -> assertTrue(csv.contains("tag1")));
+        assertTrue(csv.startsWith("Student,"));
+        assertTrue(csv.contains("Test Person"));
+        assertTrue(csv.contains("12345678"));
+        assertTrue(csv.contains("testuser"));
+        assertTrue(csv.contains("test@example.com"));
+        assertTrue(csv.contains("tag1"));
     }
 
     @Test
