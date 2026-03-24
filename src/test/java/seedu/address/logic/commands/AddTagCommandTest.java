@@ -27,6 +27,7 @@ import seedu.address.model.tag.AbstractTag;
 import seedu.address.model.tag.Tag;
 
 public class AddTagCommandTest {
+    private static final HashSet<AbstractTag> TAG_TO_ADD = new HashSet<>(List.of(new Tag("lab1")));
     private static final HashSet<AbstractTag> TAGS_TO_ADD = new HashSet<>(List.of(new Tag("lab1"), new Tag("tut5")));
 
     private Model model;
@@ -45,10 +46,10 @@ public class AddTagCommandTest {
             f.setTags(new HashSet<>());
         }));
 
-        final HashSet<AbstractTag> tagsToExpect = new HashSet<>(TAGS_TO_ADD);
+        final HashSet<AbstractTag> tagsToExpect = new HashSet<>(TAG_TO_ADD);
 
         Person personToEdit = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        AddTagCommand addTagCommand = new AddTagCommand(INDEX_SECOND_PERSON, TAGS_TO_ADD);
+        AddTagCommand addTagCommand = new AddTagCommand(INDEX_SECOND_PERSON, TAG_TO_ADD);
 
         Person editedPerson = personToEdit.cloneInto(p -> {
             p.setTags(tagsToExpect);
@@ -70,10 +71,10 @@ public class AddTagCommandTest {
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
 
-        final HashSet<AbstractTag> tagsToExpect = new HashSet<>(TAGS_TO_ADD);
+        final HashSet<AbstractTag> tagsToExpect = new HashSet<>(TAG_TO_ADD);
 
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        AddTagCommand addTagCommand = new AddTagCommand(INDEX_FIRST_PERSON, TAGS_TO_ADD);
+        AddTagCommand addTagCommand = new AddTagCommand(INDEX_FIRST_PERSON, TAG_TO_ADD);
 
         Person editedPerson = personToEdit.cloneInto(p -> {
             p.setTags(tagsToExpect);
@@ -88,7 +89,7 @@ public class AddTagCommandTest {
     }
 
     @Test
-    public void addTag_appends() {
+    public void addTag_appendsMultiple() {
         final HashSet<AbstractTag> tagsToExpect = new HashSet<>(BENSON.getTags());
         tagsToExpect.addAll(TAGS_TO_ADD);
 
@@ -129,12 +130,12 @@ public class AddTagCommandTest {
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         // put data that we know
         Person editedPerson = personToEdit.cloneInto(p -> {
-            p.setTags(TAGS_TO_ADD);
+            p.setTags(TAG_TO_ADD);
         });
         model.setPerson(personToEdit, editedPerson);
 
         personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        HashSet<AbstractTag> tagsToAdd = new HashSet<>(List.of(new Tag("tut5"), new Tag("newtag")));
+        HashSet<AbstractTag> tagsToAdd = TAG_TO_ADD;
 
         // verify that there will be duplicates
         boolean hasDuplicate = false;
@@ -157,7 +158,7 @@ public class AddTagCommandTest {
 
         // Construct expected message with duplicate warning
         StringBuilder sb = new StringBuilder();
-        sb.append(new Tag("tut5"));
+        sb.append(new Tag("lab1"));
         String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_SUCCESS, Messages.format(editedPerson)) + "\n"
                 + String.format(AddTagCommand.MESSAGE_WARNING_DUPLICATE, sb.toString());
 
