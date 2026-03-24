@@ -58,6 +58,18 @@ public class AnswerConfirmationCommand extends Command {
         return answerType;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof AnswerConfirmationCommand other)) {
+            return false;
+        }
+        return this.answerType == other.answerType
+                && Objects.equals(this.pendingCommand, other.pendingCommand);
+    }
+
     public enum AnswerType {
         YES,
         NO
