@@ -7,7 +7,7 @@ public class ConfirmationCommand extends Command {
 
     public static final String MESSAGE_REQUIRE_CONFIRMATION = """
             Are you sure you want to execute the following command?
-            %s
+            "%s"
             Please type %s to confirm or %s to cancel.
             """;
 
