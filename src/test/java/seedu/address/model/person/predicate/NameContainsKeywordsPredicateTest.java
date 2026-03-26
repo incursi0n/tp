@@ -2,6 +2,7 @@ package seedu.address.model.person.predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -37,6 +38,12 @@ public class NameContainsKeywordsPredicateTest {
 
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_nameKeywordsNull() {
+        assertThrows(AssertionError.class,
+                () -> new NameContainsKeywordsPredicate(null).test(new PersonBuilder().build()));
     }
 
     @Test

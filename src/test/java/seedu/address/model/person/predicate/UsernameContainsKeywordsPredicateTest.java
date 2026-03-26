@@ -1,10 +1,6 @@
 package seedu.address.model.person.predicate;
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +8,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.testutil.PersonBuilder;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UsernameContainsKeywordsPredicateTest {
@@ -41,6 +39,12 @@ public class UsernameContainsKeywordsPredicateTest {
 
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_usernameKeywordsNull() {
+        assertThrows(AssertionError.class,
+                () -> new UsernameContainsKeywordsPredicate(null).test(new PersonBuilder().build()));
     }
 
     @Test
