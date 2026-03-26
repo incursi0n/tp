@@ -19,6 +19,7 @@ public class PhoneContainsSequencePredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
+        assert sequence != null;
         return sequence.stream()
                 .anyMatch(s -> StringUtil.containsSubstringIgnoreCase(person.getPhone().toString(), s));
     }

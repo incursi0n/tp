@@ -1,7 +1,8 @@
-package seedu.address.model.person;
+package seedu.address.model.person.predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -10,7 +11,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.person.predicate.PhoneContainsSequencePredicate;
 import seedu.address.testutil.PersonBuilder;
 
 public class PhoneContainsSequencePredicateTest {
@@ -38,6 +38,12 @@ public class PhoneContainsSequencePredicateTest {
 
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_phoneSequenceNull() {
+        assertThrows(AssertionError.class, () -> new PhoneContainsSequencePredicate(null)
+                .test(new PersonBuilder().build()));
     }
 
     @Test
