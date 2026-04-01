@@ -78,10 +78,11 @@ fast, Doritus can get your contact management tasks done faster than traditional
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `staffslist`,
-  `tutordashboard`, `exit` and `clear`) will be
+  `studentslist`, `tutordashboard`, `exit` and `clear`) will be
   ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
   e.g. if the command specifies `staffslist anything`, it will be interpreted as `staffslist`.
+  e.g. if the command specifies `studentslist 1`, it will be interpreted as `studentslist`.
   e.g. if the command specifies `tutordashboard foo`, it will be interpreted as `tutordashboard`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines

@@ -128,6 +128,13 @@ public class AddressBookParserTest {
     public void parseCommand_studentslist() throws Exception {
         assertTrue(parser.parseCommand(StudentListCommand.COMMAND_WORD) instanceof StudentListCommand);
         assertTrue(parser.parseCommand(StudentListCommand.COMMAND_WORD + " 2") instanceof StudentListCommand);
+        assertTrue(parser.parseCommand(StudentListCommand.COMMAND_WORD + " ??? extra-input")
+                instanceof StudentListCommand);
+    }
+
+    @Test
+    public void parseCommand_studentlistAlias_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("studentlist"));
     }
 
     @Test

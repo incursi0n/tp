@@ -143,6 +143,31 @@ public class AddCommandParserTest {
     }
 
     @Test
+    public void parse_staffWithoutDelimiterBeforeFirstPrefix_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, "staffn/Jane Smith p/91234567 e/jane@example.com u/janesmith", expectedMessage);
+    }
+
+    @Test
+    public void parse_studentFieldsWithExtraWhitespace_success() {
+        Person expectedStudent = new PersonBuilder()
+                .withName("Bob Tan")
+                .withPhone("91234567")
+                .withEmail("bob@example.com")
+                .withUsername("bob123")
+                .build();
+
+        assertParseSuccess(parser, "   n/  Bob Tan   p/  91234567   e/  bob@example.com   u/  bob123   ",
+                new AddCommand(expectedStudent));
+    }
+
+    @Test
+    public void parse_studentNameWithMultipleInternalSpaces_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+        assertParseFailure(parser, "n/Bob  Tan p/91234567 e/bob@example.com u/bob123", expectedMessage);
+    }
+
+    @Test
     public void parse_staffInvalidName_failure() {
         assertParseFailure(parser, "staff n/James&" + PHONE_DESC_BOB + EMAIL_DESC_BOB + USERNAME_DESC_BOB,
                 Name.MESSAGE_CONSTRAINTS);

@@ -930,6 +930,37 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Staff listing and dashboard
+
+1. `staffslist` and `tutordashboard` ignore extra parameters
+
+    1. Test case: `staffslist anything`<br>
+       Expected: Command succeeds and displays only teaching staff.
+
+    1. Test case: `tutordashboard foo`<br>
+       Expected: Command succeeds and shows full staff availability dashboard.
+
+### Tutor slot validation
+
+1. Add a valid slot
+
+    1. Prerequisites: `staffslist` shows at least one teaching staff.
+
+    1. Test case: `tutorslot 1 mon-10-12`<br>
+       Expected: Slot is added to the first listed teaching staff.
+
+1. Reject overlapping slot
+
+    1. Prerequisites: Execute `tutorslot 1 mon-10-12` first.
+
+    1. Test case: `tutorslot 1 mon-10-11`<br>
+       Expected: Command fails with overlap-related error.
+
+1. Reject crossing-midnight slot
+
+    1. Test case: `tutorslot 1 mon-23-24`<br>
+       Expected: Command fails because the current slot format does not support crossing midnight.
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files

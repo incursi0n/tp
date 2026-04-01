@@ -37,6 +37,13 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException If the arguments do not conform to the expected format.
      */
     public AddCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.startsWith("staff")
+                && trimmedArgs.length() > "staff".length()
+                && !Character.isWhitespace(trimmedArgs.charAt("staff".length()))) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_USERNAME, PREFIX_POSITION, PREFIX_TAG);
