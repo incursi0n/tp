@@ -47,7 +47,7 @@ public class RequireConfirmationCommandTest {
     @Test
     public void execute_messageFormat_containsUserInput() throws Exception {
         String userInput = "special command input";
-        Command mockCommand = new HelpCommand();
+        Command mockCommand = new ClearCommand();
         RequireConfirmationCommand requireConfirmationCommand = new RequireConfirmationCommand(userInput, mockCommand);
 
         CommandResult result = requireConfirmationCommand.execute(model);
@@ -58,7 +58,7 @@ public class RequireConfirmationCommandTest {
     @Test
     public void execute_messageFormat_containsCommandWords() throws Exception {
         String userInput = "test input";
-        Command mockCommand = new HelpCommand();
+        Command mockCommand = new ClearCommand();
         RequireConfirmationCommand requireConfirmationCommand = new RequireConfirmationCommand(userInput, mockCommand);
 
         CommandResult result = requireConfirmationCommand.execute(model);
