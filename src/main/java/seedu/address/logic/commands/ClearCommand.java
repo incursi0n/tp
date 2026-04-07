@@ -23,7 +23,7 @@ public class ClearCommand extends Command implements CriticalCommand {
     }
 
     @Override
-    public void preExecuteVerify(Model model) throws CommandException {
+    public void preConfirmationVerify(Model model) throws CommandException {
         requireNonNull(model);
     }
 }

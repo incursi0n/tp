@@ -9,9 +9,9 @@ import seedu.address.model.Model;
 public interface CriticalCommand {
 
     /**
-     * Verify if the command will execute without errors, this will be executed before requiring confirmation.
+     * Handling verifications before requiring confirmation.
      * @param model {@code Model} which the command should operate on.
      * @throws CommandException If an error will occur during command execution.
      */
-    void preExecuteVerify(Model model) throws CommandException;
+    void preConfirmationVerify(Model model) throws CommandException;
 }

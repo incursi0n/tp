@@ -68,7 +68,7 @@ public class DeleteCommand extends Command implements CriticalCommand {
     }
 
     @Override
-    public void preExecuteVerify(Model model) throws CommandException {
+    public void preConfirmationVerify(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 

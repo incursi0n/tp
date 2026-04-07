@@ -31,7 +31,7 @@ public class RequireConfirmationCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         assert pendingCommand instanceof CriticalCommand;
         CriticalCommand criticalCommand = (CriticalCommand) pendingCommand;
-        criticalCommand.preExecuteVerify(model);
+        criticalCommand.preConfirmationVerify(model);
 
         model.setPendingCommand(pendingCommand);
         return new CommandResult(String.format(
