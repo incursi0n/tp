@@ -43,8 +43,8 @@ public class FindPersonDescriptorTest {
 
         fdOne = new FindPersonDescriptor();
         fdTwo = new FindPersonDescriptor();
-        fdOne.setName(Set.of("test1", "test2", ""));
-        fdTwo.setName(Set.of("test1", "test2"));
+        fdOne.setName(Set.of(""));
+        fdTwo.setName(Set.of());
         assertTrue(fdOne.equals(fdTwo));
 
         // test copy all values -> returns true
