@@ -43,7 +43,7 @@ public class FindPersonDescriptorTest {
         // empty name -> returns true
         fdOne.setName(Set.of());
         fdTwo.setName(Set.of(""));
-        assertFalse(fdOne.equals(fdTwo));
+        assertTrue(fdOne.equals(fdTwo));
 
         // test copy all values -> returns true
         fdTwo = new FindPersonDescriptor();
