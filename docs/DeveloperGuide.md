@@ -865,3 +865,16 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `tutorslot 1 mon-23-24`<br>
        Expected: Command fails because the current slot format does not support crossing midnight.
+
+### Adding tags
+
+Prerequisites: At least 1 person exists in the displayed list
+
+1. Add valid tag
+    1. Test case: `tag-add 1 friend course:CS2103T`
+        Expected: the tags `friend` and `course:CS2103T` will be added to the existing list of tags for the person located at index `1`. The course tag is colour-coded and will appear before `friend`.
+2. Reject invalid tag
+    1. Test case: `tag-add frie,nd`
+        Expected: Commands fails, explaining that the provided tag's format only accepts alphanumeric characters
+    2. Test case: `tag-add course:CS2103TTT`
+        Expected: Commands fails, explaining that the provided tag's format is invalid and provides the allowed syntax for course
