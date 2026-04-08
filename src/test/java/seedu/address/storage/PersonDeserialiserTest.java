@@ -197,6 +197,20 @@ public class PersonDeserialiserTest {
     }
 
     @Test
+    public void deserialise_nameFieldWithoutDoubleQuotes_throwsDeserialisePersonException() {
+        String personStrRep = "Student,no quotes name,91111111,profalice,profalice@example.com,lecturer";
+        PersonDeserialiser deserialiser = new PersonDeserialiser(personStrRep);
+        assertThrows(DeserialisePersonException.class, () -> deserialiser.deserialise());
+    }
+
+    @Test
+    public void deserialise_nameFieldWithoutContentInsideDoubleQuotes_throwsDeserialisePersonException() {
+        String personStrRep = "Student,\"\",91111111,profalice,profalice@example.com,lecturer";
+        PersonDeserialiser deserialiser = new PersonDeserialiser(personStrRep);
+        assertThrows(DeserialisePersonException.class, () -> deserialiser.deserialise());
+    }
+
+    @Test
     public void deserialise_emptyPhoneField_throwsDeserialisePersonException() {
         String personStrRep = "Student,\"Alice\",,profalice,profalice@example.com,lecturer";
         PersonDeserialiser deserialiser = new PersonDeserialiser(personStrRep);
