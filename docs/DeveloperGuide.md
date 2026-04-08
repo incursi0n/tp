@@ -671,46 +671,38 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 1.
 
-**Use case: UC04 – Add a lab group tag to a student**
+**Use case: UC04 – Add tags to a student**
 
 **MSS**
 
-1. User enters a `find NAME_KEYWORD` command.
-2. Doritus shows a list of matching contacts.
-3. User identifies the correct student and notes their index in the displayed list.
-4. User enters `addtag INDEX TAG`.
+1. User requests to show all contacts.
+2. Doritus shows contacts.
+3. User identifies the correct student and notes their `index` in the displayed list.
+4. User enters a list of tags to be added to the student at `index`.
 5. Doritus adds the tag to the student and shows a success message including the updated tags.
 
    Use case ends.
 
 **Extensions**
 
-* 1a. The `NAME_KEYWORD` is in an invalid format.
-
-    * 1a1. Doritus shows an error message explaining the valid name format.
-
-      Use case resumes at step 1.
-
-* 2a. No contacts match the search keyword.
-
-    * 2a1. Doritus shows an error message indicating that no contacts were found.
-    * 2a2. User revises the search keyword.
-
-      Use case resumes at step 1.
-
-* 4a. The given index is invalid (out of range or not a positive integer).
+* 4a. The given index is invalid (not corresponding to a student).
 
     * 4a1. Doritus shows an error message explaining that the index must refer to a contact in the displayed list.
-    * 4a2. User checks the displayed list and re-enters `addtag INDEX TAG`.
+    * 4a2. User checks the displayed list and corrects their mistake.
 
       Use case resumes at step 4.
 
-* 4b. The given tag is invalid or already exists for that student.
+* 4b. The given tag is invalid.
 
-    * 4b1. Doritus shows an error message describing the validation problem (e.g., invalid characters, duplicate tag).
-    * 4b2. User corrects the tag value and re-enters `addtag INDEX TAG`.
+    * 4b1. Doritus shows an error message describing the validation problem (e.g. invalid characters, invalid format).
+    * 4b2. User checks the entered tags and corrects their mistake.
 
       Use case resumes at step 4.
+
+* 4c. A given tag already exists for that student.
+    * 4c1. Doritus shows a warning (non-fatal) that the tag already exists.
+
+      Use case resumes at step 5.
 
 ---
 
