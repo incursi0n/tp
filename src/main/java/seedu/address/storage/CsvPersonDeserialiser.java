@@ -20,14 +20,14 @@ import seedu.address.storage.exceptions.DeserialisePersonException;
 /**
  * Deserialises a CSV string representation of a Person into a Person object.
  */
-public class PersonDeserialiser {
+public class CsvPersonDeserialiser {
     private String personCsvRep;
     private SubstringStream subStrStream;
 
     /**
-     * Initialises PersonDeserialiser with the person csv representation string.
+     * Initialises CsvPersonDeserialiser with the person csv representation string.
      */
-    public PersonDeserialiser(String personCsvRep) {
+    public CsvPersonDeserialiser(String personCsvRep) {
         this.personCsvRep = personCsvRep;
         this.subStrStream = new SubstringStream(personCsvRep);
     }

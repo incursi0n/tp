@@ -57,7 +57,7 @@ public class CsvImporter {
         // skip header row
         rawContactsData = rawContactsData.subList(1, rawContactsData.size());
         for (String data : rawContactsData) {
-            PersonDeserialiser deserialiser = new PersonDeserialiser(data);
+            CsvPersonDeserialiser deserialiser = new CsvPersonDeserialiser(data);
             Person person = deserialiser.deserialise();
             if (!model.hasPerson(person)) {
                 model.addPerson(person);
