@@ -453,6 +453,7 @@ Import contacts from the given file path of a .csv file.
 **Behavior:**
 
 * Only the contacts who are not currently in the address book will be added.
+* If an error occurs during the import, none of the contacts from the csv file will be added.
 
 **Examples:**
 
