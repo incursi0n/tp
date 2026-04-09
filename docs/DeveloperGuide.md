@@ -380,10 +380,12 @@ The feature is implemented across the following components:
 
 **Storage:**
 
-* `CsvImporter — Utility class responsible for:
+* `CsvImporter` — Utility class responsible for:
     1. Reading from the csv file containing all the contacts.
-    2. Converting each CSV formatted string (representing a person) into a `Person` via
-       `CsvImporter#deserialisePerson(personStrRep)`
+    2. Adds all deserialised `Person` into the  model. Uses `CsvPersonDeserialiser#deserialise(personStrRep)` to deserialise each csv row representing a person.
+  3. 
+* `CsvPersonDeserialiser` - Utility class responsible for:
+    1. Deserialising a csv representation string of a `Person` into a `Person` object.
 
 **Command Format:**
 
