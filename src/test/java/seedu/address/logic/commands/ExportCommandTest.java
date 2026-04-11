@@ -17,7 +17,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.storage.CsvExporter;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -41,7 +40,7 @@ public class ExportCommandTest {
     }
 
     @Test
-    @EnabledOnOs({OS.WINDOWS})
+    @EnabledOnOs({ OS.WINDOWS })
     public void execute_invalidFilePath_throwsCommandException() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         String invalidFilePath = "<bad>.csv";
@@ -49,11 +48,11 @@ public class ExportCommandTest {
         ExportCommand exportCommand = new ExportCommand(invalidFilePath);
 
         CommandException thrown = assertThrows(CommandException.class, () -> exportCommand.execute(model));
-        assertEquals(ExportCommand.MESSAGE_IO_EXCEPTION, thrown.getMessage());
+        assertEquals(ExportCommand.MESSAGE_INVALID_PATH_EXCEPTION, thrown.getMessage());
     }
 
     @Test
-    @EnabledOnOs({OS.LINUX, OS.MAC})
+    @EnabledOnOs({ OS.LINUX, OS.MAC })
     public void execute_invalidFilePathLinux_throwsCommandException() {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         // Test with null character which is invalid in Linux file paths
@@ -62,25 +61,49 @@ public class ExportCommandTest {
         ExportCommand exportCommand = new ExportCommand(invalidFilePath);
 
         CommandException thrown = assertThrows(CommandException.class, () -> exportCommand.execute(model));
-        assertEquals(ExportCommand.MESSAGE_IO_EXCEPTION, thrown.getMessage());
+        assertEquals(ExportCommand.MESSAGE_INVALID_PATH_EXCEPTION, thrown.getMessage());
     }
 
     @Test
-    public void execute_missingDirectory_throwsCommandException() {
+    public void execute_nestedDirectorySingleLevel_success() throws CommandException {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        // Test with a path to a non-existent directory
-        String missingDirPath = "/nonexistent/directory/contacts.csv";
+        String filePath = tempDir.resolve("output/contacts.csv").toString();
 
-        ExportCommand exportCommand = new ExportCommand(missingDirPath);
+        ExportCommand exportCommand = new ExportCommand(filePath);
+        CommandResult result = exportCommand.execute(model);
 
-        CommandException thrown = assertThrows(CommandException.class, () -> exportCommand.execute(model));
-        assertEquals(ExportCommand.MESSAGE_IO_EXCEPTION, thrown.getMessage());
+        String expectedMessage = String.format(ExportCommand.MESSAGE_SUCCESS, filePath);
+        assertEquals(expectedMessage, result.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_nestedDirectoryMultipleLevels_success() throws CommandException {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String filePath = tempDir.resolve("output/data/contacts/export.csv").toString();
+
+        ExportCommand exportCommand = new ExportCommand(filePath);
+        CommandResult result = exportCommand.execute(model);
+
+        String expectedMessage = String.format(ExportCommand.MESSAGE_SUCCESS, filePath);
+        assertEquals(expectedMessage, result.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_nestedDirectoryDeepNesting_success() throws CommandException {
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        String filePath = tempDir.resolve("a/b/c/d/e/f/g/contacts.csv").toString();
+
+        ExportCommand exportCommand = new ExportCommand(filePath);
+        CommandResult result = exportCommand.execute(model);
+
+        String expectedMessage = String.format(ExportCommand.MESSAGE_SUCCESS, filePath);
+        assertEquals(expectedMessage, result.getFeedbackToUser());
     }
 
     @Test
     public void execute_defaultFilePath_success() throws CommandException {
         Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        String filePath = CsvExporter.DEFAULT_FILE_PATH;
+        String filePath = tempDir.resolve("contacts.csv").toString();
 
         ExportCommand exportCommand = new ExportCommand(filePath);
         CommandResult result = exportCommand.execute(model);
