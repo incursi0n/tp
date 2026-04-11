@@ -237,7 +237,8 @@ public class FindCommand extends Command {
 
         public boolean isValid() {
             return (username != null && !username.isEmpty()) || (name != null && !name.isEmpty())
-                    || (tags != null && !tags.isEmpty()) || (phone != null && !phone.isEmpty());
+                    || (tags != null && !tags.isEmpty()) || (phone != null && !phone.isEmpty())
+                    || (email != null && !email.isEmpty());
         }
 
         @Override
