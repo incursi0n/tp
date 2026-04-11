@@ -138,16 +138,18 @@ public class FindCommandParserTest {
     @Test
     public void parse_argsWithEmptyValues_returnsFindCommand() {
         // Only empty values
-        FindPersonDescriptor fd = new FindPersonDescriptor();
-        FindCommand expectedFindCommand = new FindCommand(fd);
-        assertParseSuccess(parser, " p/", expectedFindCommand);
-        assertParseSuccess(parser, " e/", expectedFindCommand);
-        assertParseSuccess(parser, " u/", expectedFindCommand);
-        assertParseSuccess(parser, " p/ e/ u/", expectedFindCommand);
+        assertParseFailure(parser, " p/",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " e/",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " u/",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " p/ e/ u/",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
 
-        fd = new FindPersonDescriptor();
+        FindPersonDescriptor fd = new FindPersonDescriptor();
         fd.setPhone(Set.of("5253"));
-        expectedFindCommand = new FindCommand(fd);
+        FindCommand expectedFindCommand = new FindCommand(fd);
         assertParseSuccess(parser, " e/ u/ p/5253", expectedFindCommand);
 
         fd = new FindPersonDescriptor();
