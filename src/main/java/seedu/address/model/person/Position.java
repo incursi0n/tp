@@ -19,7 +19,8 @@ public class Position {
     private static final Set<String> ALLOWED_VALUES = Set.of(TEACHING_ASSISTANT, PROFESSORS);
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Position must be one of: " + String.join(", ", ALLOWED_VALUES);
+            "Position must be exactly one of: " + String.join(", ", ALLOWED_VALUES)
+                    + " (case-sensitive, full wording).";
 
     public final String value;
 
