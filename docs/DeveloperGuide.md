@@ -235,6 +235,13 @@ Either variant of tag can be constructed using `TagFactory.create(tag)`. Which o
   3. `RestrictedTag`'s constructor will pass `value` into the schema to check against its own specified validation method
   4. Should validation fail, an error is thrown
 
+#### Tutorial/Lab Tag Design Rationale
+- Tutorial and Lab tags optionally allow a course to be associated these tags. (so `tut:A13` is distinct from `tut:A13-CS2103`)
+    - Reasoning: We leave the choice of convention to the user. For example, if they mainly teach CS1231S, they could decide that the one without the course marker is from their main course (so that it is easier to spot).
+- A `course` tag does not have to already be attached to the person
+    - We prioritise user flexibility over strict enforcement.
+    - Reasoning: The course suffix is mainly for contextual metadata. For example, a user may wish to disambiguate two tutorial groups by attaching a course identifier, but do not want the additional course tag cluttering the tag list.
+
 ### Tutor Availability Scheduling
 
 #### Overview

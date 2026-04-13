@@ -109,7 +109,7 @@ fast, Doritus can get your contact management tasks done faster than traditional
 
 ### Types of tags
 
-**Note:** Tags must be non-empty, they are also case-sensitive
+**Note:** Tags must be **non-empty**
 - General purpose tags: Alphanumeric characters only (e.g. `examDuty`)
     - Case-insensitive (e.g. `examDuty` and `examduty` are treated as equivalent tags)
 - Special tags: these tags follow a specific format:
