@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -10,6 +8,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -124,6 +123,19 @@ public class AnswerConfirmationCommandTest {
                 seedu.address.logic.Messages.format(personToDelete));
 
         assertCommandSuccess(cmd, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_answerWithArgs_throwCommandException() {
+        model.setPendingCommand(new DeleteCommand(INDEX_FIRST_PERSON));
+        String args = "aaa";
+        AnswerConfirmationCommand cmd = new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.YES, args);
+        String expectedMsg = String.format(AnswerConfirmationCommand.EXTRA_ARGUMENTS, args,
+                AnswerConfirmationCommand.COMMAND_WORD_YES, AnswerConfirmationCommand.COMMAND_WORD_NO);
+        assertCommandFailure(cmd, model, expectedMsg);
+
+        cmd = new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.NO, "aaa");
+        assertCommandFailure(cmd, model, expectedMsg);
     }
 
     @Test
