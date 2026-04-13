@@ -558,8 +558,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to find a person by name, phone, email or username
-2. System shows a list of persons whose names match the search query
+1. User requests to find a person by name, phone, email, username or any combination of these fields (name, phone, email, username)
+2. System shows a list of persons whose name, phone, email and username match the search query
 
    Use case ends.
 
