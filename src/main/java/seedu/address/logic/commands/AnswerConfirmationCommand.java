@@ -13,24 +13,35 @@ public class AnswerConfirmationCommand extends Command {
     public static final String COMMAND_WORD_YES = "Y";
     public static final String COMMAND_WORD_NO = "N";
 
-    public static final String MESSAGE_UNKNOWN_ANSWER = """
-            Unknown answer: %s.
+    public static final String MESSAGE_COMMAND_CANCELLED = "Command Cancelled!";
+    public static final String MESSAGE_NO_PENDING_COMMAND = "No pending command to answer for.";
+    private static final String MESSAGE_EXPECTED_ANSWERS = """
             Expected answers are:
                 %s (for yes)
                 %s (for no)
             """;
-    public static final String MESSAGE_COMMAND_CANCELLED =
-            "Command Cancelled!";
-    public static final String MESSAGE_NO_PENDING_COMMAND = "No pending command to answer for.";
+    public static final String MESSAGE_UNKNOWN_ANSWER = "Unknown answer: %s.\n" + MESSAGE_EXPECTED_ANSWERS;
+    public static final String EXTRA_ARGUMENTS = MESSAGE_COMMAND_CANCELLED + "\nUnexpected arguments: %s.\n"
+            + MESSAGE_EXPECTED_ANSWERS + "Note: Answers are case sensitive.";
 
     private final AnswerType answerType;
+    private final String args;
+
+    /**
+     * @param answerType The type of answer provided by the user.
+     * @param args Any trailing character sequence (Expected to be null)
+     */
+    public AnswerConfirmationCommand(AnswerType answerType, String args) {
+        Objects.requireNonNull(answerType);
+        this.args = args;
+        this.answerType = args == null || args.isEmpty() ? answerType : AnswerType.ERRONEOUS_ARGUMENTS;
+    }
 
     /**
      * @param answerType The type of answer provided by the user.
      */
     public AnswerConfirmationCommand(AnswerType answerType) {
-        Objects.requireNonNull(answerType);
-        this.answerType = answerType;
+        this(answerType, null);
     }
 
     @Override
@@ -46,6 +57,8 @@ public class AnswerConfirmationCommand extends Command {
         case NO -> {
             return new CommandResult(MESSAGE_COMMAND_CANCELLED);
         }
+        case ERRONEOUS_ARGUMENTS -> throw new CommandException(String.format(EXTRA_ARGUMENTS, args, COMMAND_WORD_YES,
+                COMMAND_WORD_NO));
         default -> throw new CommandException(String.format(
                 MESSAGE_UNKNOWN_ANSWER,
                 answerType,
@@ -70,7 +83,6 @@ public class AnswerConfirmationCommand extends Command {
      * The type of answer provided by the user for a confirmation prompt.
      */
     public enum AnswerType {
-        YES,
-        NO
+        YES, NO, ERRONEOUS_ARGUMENTS
     }
 }

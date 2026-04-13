@@ -132,10 +132,10 @@ public class AddressBookParser {
             return new ImportCommandParser().parse(arguments);
 
         case AnswerConfirmationCommand.COMMAND_WORD_YES:
-            return new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.YES);
+            return new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.YES, arguments);
 
         case AnswerConfirmationCommand.COMMAND_WORD_NO:
-            return new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.NO);
+            return new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.NO, arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
