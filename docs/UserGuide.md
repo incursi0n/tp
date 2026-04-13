@@ -110,6 +110,7 @@ fast, Doritus can get your contact management tasks done faster than traditional
 ### Types of tags
 
 - General purpose tags: Alphanumeric characters only (e.g. `examDuty`)
+    - Case-insensitive (e.g. `examDuty` and `examduty` are treated as equivalent tags)
 - Special tags: these tags follow a specific format:
     - Tutorial groups: begins with `tut:`, followed by an optional uppercase letter and maximally 2 digits (e.g.
       `tut:A11`, `tut:17`, `tut:2`)
@@ -350,7 +351,8 @@ Appends tags to an existing person, without having to respecify all existing tag
 
 * Unlike the `edit` command, `tag-add` will not override existing tags. Instead, all tags specified will be added to the
   person's list of tags.
-* A warning will be generated if any of the tags already exist (but command will still succeed)
+* A warning will be generated if any of the tags already exist (the command will update the existing entry with the new tag)
+* If multiple duplicate tags are present, the first instance will be picked (e.g. `tag-add 1 t/theTag t/thetag`, `theTag` is used)
 
 **Examples:**
 

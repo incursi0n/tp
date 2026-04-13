@@ -35,7 +35,7 @@ public class AddTagCommand extends Command {
     //@formatter:on
 
     public static final String MESSAGE_ADD_SUCCESS = "Successfully added tag(s) to Person: %1$s";
-    public static final String MESSAGE_WARNING_DUPLICATE = "WARNING, the following tags were ignored "
+    public static final String MESSAGE_WARNING_DUPLICATE = "WARNING, the following tags were updated "
             + "as they already exist: %1$s";
 
     private Index targetPersonIndex;
@@ -108,7 +108,7 @@ public class AddTagCommand extends Command {
 
     /**
      * Creates a new set of tags by combining the existing tags with the new tags to
-     * be added.
+     * be added. Any duplicate tags will be updated to the newer version.
      *
      * @param existing The set of tags currently assigned to the existing person.
      * @return A new set containing all tags from both existing and new tags, with
@@ -116,6 +116,7 @@ public class AddTagCommand extends Command {
      */
     private Set<AbstractTag> appendTags(Set<AbstractTag> existing) {
         var newTags = new HashSet<>(existing);
+        newTags.removeAll(tagsToAdd);
         newTags.addAll(tagsToAdd);
         return newTags;
     }
