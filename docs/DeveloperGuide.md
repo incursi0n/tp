@@ -248,7 +248,7 @@ Either variant of tag can be constructed using `TagFactory.create(tag)`. Which o
 
 Teaching staff members can specify when they are available to teach using the `tutorslot` command. This feature adds a
 `Set<TimeSlot>` field to the `TeachingStaff` model, where each `TimeSlot` represents a day-of-week and time range (e.g.,
-Monday 10:00â€“12:00). Availability is **append-only** from the CLI: you can add slots with `tutorslot`, but there is no
+Monday 10:00–12:00). Availability is **append-only** from the CLI: you can add slots with `tutorslot`, but there is no
 command to edit or remove an individual slot (workarounds: delete the staff contact or advanced editing of the data
 file; planned fixes are listed in [Appendix: Planned Enhancements](#appendix-planned-enhancements)). In other words,
 slot management supports **Create** only, not full CRUD on each slot.
@@ -487,7 +487,7 @@ The following sequence diagram shows how the user's answer (`Y` to confirm, `N` 
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a ...                            | I want to ...                                           | So that I can...                                                        |
+| Priority | As a …                            | I want to …                                           | So that I can …                                                        |
 |----------|------------------------------------|--------------------------------------------------------|------------------------------------------------------------------------|
 | `* * *`  | new user                           | see usage instructions                                 | refer to instructions when I forget how to use the Doritus             |
 | `* * *`  | user                               | add a new contact                                      | store **contact details** (name, phone, email, username, and optional tags) for future reference |
@@ -585,7 +585,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC04 â€“ Add tags to a student**
+**Use case: UC04 – Add tags to a student**
 
 **MSS**
 
@@ -620,7 +620,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC05 â€“ Prepare a tutorial group contact list for attendance**
+**Use case: UC05 – Prepare a tutorial group contact list for attendance**
 
 **MSS**
 
@@ -683,7 +683,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 1.
 
-**Use case: UC08 â€“ Add availability to a teaching staff member**
+**Use case: UC08 – Add availability to a teaching staff member**
 
 **MSS**
 
@@ -719,7 +719,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ---
 
-**Use case: UC09 â€“ View tutor availability dashboard**
+**Use case: UC09 – View tutor availability dashboard**
 
 **MSS**
 
@@ -779,7 +779,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   filtering contacts.
 * **Tutorial group / Lab group**: A subgroup of students within a module, usually associated with a specific weekly
   session; commonly represented as tags in Doritus.
-* **Time slot**: A day-of-week and hour range (e.g., Monday 10:00â€“12:00) representing when a teaching staff member is
+* **Time slot**: A day-of-week and hour range (e.g., Monday 10:00–12:00) representing when a teaching staff member is
   available to teach. Stored as `TimeSlot` objects in a `Set<TimeSlot>` on each `TeachingStaff`. Added with `tutorslot`;
   viewed with `tutordashboard`.
 * **Mainstream OS**: Windows, Linux, macOS.
