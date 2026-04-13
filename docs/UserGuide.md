@@ -385,9 +385,9 @@ Edits an existing person in the address book. For teaching staff, you can also c
 * When editing tags, existing tags are replaced (not cumulative). Use `t/` with no value to clear all tags.
   **Examples:**
 
-* `edit 1 p/91234567 e/johndoe@example.com` — Edits the 1st person's phone and email.
-* `edit 2 n/Betsy Crower t/` — Edits the 2nd person's name and clears all tags.
-* `staffslist` then `edit 1 pos/Professors` — Edits the 1st teaching staff's position to Professors.
+  * `edit 1 p/91234567 e/johndoe@example.com` — Edits the 1st person's phone and email.
+  * `edit 2 n/Betsy Crower t/` — Edits the 2nd person's name and clears all tags.
+  * `staffslist` then `edit 1 pos/Professors` — Edits the 1st teaching staff's position to Professors.
 
 ---
 
