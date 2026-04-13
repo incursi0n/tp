@@ -57,6 +57,14 @@ public class PersonTest {
         String nameWithExtraWord = VALID_NAME_BOB + " Jr";
         editedBob = new PersonBuilder(BOB).withName(nameWithExtraWord).build();
         assertFalse(BOB.isSamePerson(editedBob));
+
+        // same name, phone, username; only email differs -> false
+        editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
+        assertFalse(ALICE.isSamePerson(editedAlice));
+
+        // same name, phone, email; only username differs -> false
+        editedAlice = new PersonBuilder(ALICE).withUsername(VALID_USERNAME_BOB).build();
+        assertFalse(ALICE.isSamePerson(editedAlice));
     }
 
     @Test
