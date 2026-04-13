@@ -1,3 +1,6 @@
+﻿* If a staff member already has `mon-10-12`, then `tutorslot 1 mon-12-14` succeeds but `tutorslot 1 mon-11-13` fails
+  because it overlaps.
+
 ---
 layout: page
 title: User Guide
@@ -37,12 +40,12 @@ fast, Doritus can get your contact management tasks done faster than traditional
 
     * `add n/John Doe p/98765432 e/johnd@example.com u/johndoe123 t/friends` : Adds a student.
 
-    * `add staff n/Jane Smith p/91234567 e/jane@example.com u/janesmith` : Adds a teaching staff (tutor). Position
+    * `add staff n/Jane Smith p/91234567 e/jane@example.com u/janesmith` : Adds a teaching staff member. Position
       defaults to `Teaching Assistant` if omitted.
 
     * `staffslist` : Lists only teaching staff. `studentslist` : Lists only students.
 
-    * `tutorslot 2 mon-10-12` : Adds Monday 10:00–12:00 availability to the 2nd person in the list (must be teaching
+    * `tutorslot 2 mon-10-12` : Adds Monday 10:00â€“12:00 availability to the 2nd person in the list (must be teaching
       staff).
 
     * `tutordashboard` : Shows all teaching staff and their available time slots.
@@ -73,8 +76,8 @@ fast, Doritus can get your contact management tasks done faster than traditional
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `â€¦`â€‹ after them can be used multiple times including zero times.<br>
+  e.g. `[t/TAG]â€¦â€‹` can be used as `Â ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -98,7 +101,7 @@ fast, Doritus can get your contact management tasks done faster than traditional
 * **Multiple contacts may share the same display name** (e.g. two different students both named `John Doe`) as long as
   their **phone**, **email**, and **username** are all distinct.
 * A contact is rejected as a **duplicate person** only if it has the **same identity** as someone already in the book:
-  same name, phone, email, and username, and—for teaching staff—the same `pos/` value (compared **case-insensitively**;
+  same name, phone, email, and username, andâ€”for teaching staffâ€”the same `pos/` value (compared **case-insensitively**;
   stored as `Teaching Assistant` or `Professors`). The error message is:
   `This person already exists in the address book.`
 * **Phone**, **email**, and **username** must each remain unique across contacts: two people cannot share the same
@@ -129,17 +132,22 @@ The `up` and `down` arrow keys can be used to navigate previously entered comman
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Opens the help window.
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
 
+**Behavior:**
+
+* Opens the help window and shows the message `Opened help window.` in the command result area.
+* The help window displays a link to the online User Guide.
+
 ### Adding a student: `add`
 
 Adds a student to the address book.
 
-**Format:** `add n/NAME p/PHONE e/EMAIL u/USERNAME [t/TAG]…​`
+**Format:** `add n/NAME p/PHONE e/EMAIL u/USERNAME [t/TAG]â€¦â€‹`
 
 **Parameters:**
 
@@ -160,7 +168,8 @@ Adds a student to the address book.
 * `PHONE`: Valid Singapore phone number. Exactly **8 digits in one contiguous block** (no spaces or other characters),
   must start with `3`, `6`, `8`, or `9`. Must be unique.
 * `EMAIL`: Valid email format. Must be unique (see [Duplicate contacts](#duplicate-contacts)).
-* `USERNAME`: Alphanumeric characters only (no spaces or special characters). Must be unique.
+* `USERNAME`: Alphanumeric characters only (no spaces or special characters). Must be unique. Username uniqueness is
+  case-sensitive.
 * `TAG`: Optional; can be used multiple times. See [Types of tags](#types-of-tags) for more details.
 
 **Examples:**
@@ -174,9 +183,9 @@ Adds a student to the address book.
 
 ### Adding teaching staff: `add staff`
 
-Adds a teaching staff (tutor) to the address book.
+Adds a teaching staff member to the address book.
 
-**Format:** `add staff n/NAME p/PHONE e/EMAIL u/USERNAME [pos/POSITION] [t/TAG]…​`
+**Format:** `add staff n/NAME p/PHONE e/EMAIL u/USERNAME [pos/POSITION] [t/TAG]â€¦â€‹`
 
 **Parameters:**
 
@@ -199,7 +208,7 @@ Adds a teaching staff (tutor) to the address book.
 * `PHONE`: Valid Singapore phone number. Exactly **8 digits in one contiguous block** (no spaces or other characters),
   must start with `3`, `6`, `8`, or `9`. Must be unique.
 * `EMAIL`: Valid email format. Must be unique (see [Duplicate contacts](#duplicate-contacts)).
-* `USERNAME`: Alphanumeric only. Must be unique.
+* `USERNAME`: Alphanumeric only. Must be unique. Username uniqueness is case-sensitive.
 * `POSITION`: Must be one of: `Teaching Assistant`, `Professors` (spelling must match; **letter case is ignored**). The
   app stores and displays the canonical form (`Teaching Assistant` or `Professors`). If omitted, defaults to
   `Teaching Assistant`.
@@ -211,9 +220,9 @@ Adds a teaching staff (tutor) to the address book.
 
 **Examples:**
 
-* `add staff n/Jane Smith p/91234567 e/jane@example.com u/janesmith` — Adds teaching staff with default position
+* `add staff n/Jane Smith p/91234567 e/jane@example.com u/janesmith` â€” Adds teaching staff with default position
   "Teaching Assistant".
-* `add staff n/Dr Lee p/91234567 e/lee@example.com u/drlee pos/Professors t/colleagues` — Adds teaching staff with full
+* `add staff n/Dr Lee p/91234567 e/lee@example.com u/drlee pos/Professors t/colleagues` â€” Adds teaching staff with full
   details.
 
 ---
@@ -224,6 +233,11 @@ Shows a list of all persons in the address book (both students and teaching staf
 
 **Format:** `list`
 
+**Behavior:**
+
+* Shows all persons in the address book.
+* If the address book is empty, shows `No contacts found. Add your first contact to get started!`
+
 ---
 
 ### Listing teaching staff only : `staffslist`
@@ -232,6 +246,11 @@ Shows only teaching staff in the address book.
 
 **Format:** `staffslist`
 
+**Behavior:**
+
+* Shows only teaching staff in the address book.
+* If there are no teaching staff, shows `No teaching staff found.`
+
 ---
 
 ### Listing students only : `studentslist`
@@ -239,6 +258,11 @@ Shows only teaching staff in the address book.
 Shows only students (persons who are not teaching staff) in the address book.
 
 **Format:** `studentslist`
+
+**Behavior:**
+
+* Shows only students in the address book.
+* If there are no students, shows `No students found.`
 
 ---
 
@@ -251,33 +275,40 @@ available to teach.
 
 **Parameters:**
 
-* `INDEX`: Must be a positive integer (1, 2, 3, …) referring to the position of a **teaching staff member** in the
-  **currently displayed** list.
+* `INDEX`: Must be a positive integer (1, 2, 3, â€¦) referring to the position of a **teaching staff member** in the
+  **currently displayed** list. The person at that index must be a teaching staff member.
 * `SLOT`: Must be in format `DAY-START-END`, where:
     * `DAY` is one of: `mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun` (case-insensitive).
     * `START` and `END` are whole-hour values from **0 to 23**. `START` must be strictly before `END` on the same day.
       For example, `mon-23-24` is invalid because `END` must be greater than `START` within the same day; slots that
-      span midnight (e.g. 23:00–01:00) are not supported.
+      span midnight (e.g. 23:00â€“01:00) are not supported.
+    * `24` is outside the allowed hour range `0-23`.
     * Slots that cross midnight are not supported in the current format.
 
 **Behavior:**
 
-* The person at the given index must be a teaching staff member (not a student). If you are viewing a mixed list
-  (`list`), use `staffslist` first so the index refers to a staff member, or expect an error if the person at that index
-  is a student.
-* Overlapping time slots on the same day are not allowed for the same person (including exact duplicates).
+* Adding a `tutorslot` only works for a teaching staff member in the **currently displayed** list. If you are viewing a
+  mixed list (`list`), use `staffslist` first so the index refers to a staff member, or expect an error if the person at
+  that index is a student.
+* The slot must be a same-day `DAY-START-END` whole-hour range with `START < END`; crossing midnight is invalid.
+* Overlapping time slots on the same day are not allowed for the same person, including exact duplicates. For example,
+  if a staff member already has `mon-10-12`, then `mon-11-13`, `mon-10-12`, and `mon-10-11` will all be rejected.
+* Boundary-touching slots are allowed. For example, if a staff member already has `mon-10-12`, then `mon-12-14` is
+  allowed because the two slots only touch at the boundary and do not overlap.
 * Time slots are displayed in the UI beneath the staff member's contact details (each slot as its own label, with
   spacing between multiple slots).
 * Time slots are persisted in the data file.
-* You can **add** multiple slots with repeated `tutorslot` commands, but there is **no command** to edit or remove one
-  slot only (append-only slot management). To change slots you may delete the staff contact and re-add them, or edit the
-  data file directly (advanced; see [Editing the data file](#editing-the-data-file)).
+* Successful additions are append-only: you can **add** multiple slots with repeated `tutorslot` commands, but there is
+  **no command** to edit or remove one slot only. To change slots you may delete the staff contact and re-add them, or
+  edit the data file directly (advanced; see [Editing the data file](#editing-the-data-file)).
 
 **Examples:**
 
-* `staffslist` then `tutorslot 1 mon-10-12` — Adds Monday 10:00–12:00 availability to the 1st teaching staff.
-* `tutorslot 2 wed-14-16` — Adds Wednesday 14:00–16:00 availability to the 2nd person (must be staff).
-* `tutorslot 1 fri-9-17` — Adds Friday 09:00–17:00 availability to the 1st person (must be staff).
+* `staffslist` then `tutorslot 1 mon-10-12` - Adds Monday 10:00-12:00 availability to the 1st teaching staff.
+* `tutorslot 2 wed-14-16` - Adds Wednesday 14:00-16:00 availability to the 2nd person (must be staff).
+* `tutorslot 1 fri-9-17` - Adds Friday 09:00-17:00 availability to the 1st person (must be staff).
+* If a staff member already has `mon-10-12`, then `tutorslot 1 mon-12-14` succeeds but `tutorslot 1 mon-11-13` fails
+  because it overlaps.
 
 ---
 
@@ -289,9 +320,11 @@ Displays a dashboard of all teaching staff and their available time slots, regar
 
 **Behavior:**
 
-* Shows **all** teaching staff in the address book — not just those visible in the current filtered list.
+* Shows **all** teaching staff in the address book â€” not just those visible in the current filtered list.
 * For each staff member, lists their time slots sorted by day and start time.
 * Displays `(no slots set)` for staff members who have no slots added yet.
+
+* If there are no teaching staff, shows `No teaching staff found.`
 
 **Example output:**
 
@@ -304,7 +337,7 @@ Tutor Availability Dashboard (3 tutor(s)):
 
 **Examples:**
 
-* `tutordashboard` — Shows the full availability dashboard for all teaching staff.
+* `tutordashboard` â€” Shows the full availability dashboard for all teaching staff.
 * After `tutorslot 1 mon-10-12`, run `tutordashboard` to confirm the slot was added.
 
 ---
@@ -313,11 +346,11 @@ Tutor Availability Dashboard (3 tutor(s)):
 
 Edits an existing person in the address book. For teaching staff, you can also change their position.
 
-**Format:** `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [u/USERNAME] [pos/POSITION] [t/TAG]…​`
+**Format:** `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [u/USERNAME] [pos/POSITION] [t/TAG]â€¦â€‹`
 
 **Parameters:**
 
-* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the position in the **currently displayed** list.
+* `INDEX`: Must be a positive integer (1, 2, 3, â€¦â€‹) referring to the position in the **currently displayed** list.
 * At least one optional field must be provided.
 * `pos/POSITION`: Only applies to teaching staff. Must be `Teaching Assistant` or `Professors` (case-insensitive).
   Ignored for students.
@@ -329,9 +362,9 @@ Edits an existing person in the address book. For teaching staff, you can also c
 * When editing tags, existing tags are replaced (not cumulative). Use `t/` with no value to clear all tags.
   **Examples:**
 
-* `edit 1 p/91234567 e/johndoe@example.com` — Edits the 1st person's phone and email.
-* `edit 2 n/Betsy Crower t/` — Edits the 2nd person's name and clears all tags.
-* `staffslist` then `edit 1 pos/Professors` — Edits the 1st teaching staff's position to Professors.
+* `edit 1 p/91234567 e/johndoe@example.com` â€” Edits the 1st person's phone and email.
+* `edit 2 n/Betsy Crower t/` â€” Edits the 2nd person's name and clears all tags.
+* `staffslist` then `edit 1 pos/Professors` â€” Edits the 1st teaching staff's position to Professors.
 
 ---
 
@@ -339,11 +372,11 @@ Edits an existing person in the address book. For teaching staff, you can also c
 
 Appends tags to an existing person, without having to respecify all existing tags
 
-**Format:** `tag-add INDEX [t/TAG]…`
+**Format:** `tag-add INDEX [t/TAG]â€¦`
 
 **Parameters:**
 
-* `INDEX`: Must be a positive integer (1, 2, 3, …​) referring to the position in the **currently displayed** list.
+* `INDEX`: Must be a positive integer (1, 2, 3, â€¦â€‹) referring to the position in the **currently displayed** list.
 * `TAG`: At least one must be provided. Can be used multiple times. See [Types of tags](#types-of-tags) for more
   details.
 
@@ -392,7 +425,7 @@ Finds persons whose names contain any of the given keywords and/or who have any 
 * **Phone Sequence search:** Each `p/` value is a **digit-only** sequence used to search within stored phone numbers.
     * Each sequence must be **1 to 8 digits** (no spaces or other characters). Values with more than 8 digits are not
       accepted.
-    * Matching is by **substring** on the person’s phone: e.g. `456` matches `91234567`.
+    * Matching is by **substring** on the personâ€™s phone: e.g. `456` matches `91234567`.
     * Persons whose phone matches at least one given sequence are returned (i.e. `OR` search across `p/` values).
 
 * **Combined search:** If both keywords and tags are provided, persons must match at least one keyword **AND** at least
@@ -401,11 +434,11 @@ Finds persons whose names contain any of the given keywords and/or who have any 
 
 **Examples:**
 
-* `find John` — Returns all persons with "John" in their name
-* `find alex david` — Returns `Alex Yeoh`, `David Li`, and anyone else with "alex" or "david" in their name
-* `find t/friends` — Returns all persons tagged with "friends"
-* `find t/colleagues t/important` — Returns all persons tagged with either "colleagues" or "important"
-* `find John t/friends` — Returns persons with "John" in their name who are also tagged with "friends"<br>
+* `find John` â€” Returns all persons with "John" in their name
+* `find alex david` â€” Returns `Alex Yeoh`, `David Li`, and anyone else with "alex" or "david" in their name
+* `find t/friends` â€” Returns all persons tagged with "friends"
+* `find t/colleagues t/important` â€” Returns all persons tagged with either "colleagues" or "important"
+* `find John t/friends` â€” Returns persons with "John" in their name who are also tagged with "friends"<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ---
@@ -418,7 +451,7 @@ Deletes the specified person from the address book. Works for both students and 
 
 **Parameters:**
 
-* `INDEX`: Must be a positive integer (1, 2, 3, …​). Refers to the position in the **currently displayed** list.
+* `INDEX`: Must be a positive integer (1, 2, 3, â€¦â€‹). Refers to the position in the **currently displayed** list.
 
 **Behavior:**
 
@@ -429,9 +462,9 @@ Deletes the specified person from the address book. Works for both students and 
 
 **Examples:**
 
-* `list` then `delete 2` — Deletes the 2nd person in the full list (student or staff).
-* `staffslist` then `delete 1` — Deletes the 1st teaching staff in the staff list.
-* `find Betsy` then `delete 1` — Deletes the 1st person in the find results.
+* `list` then `delete 2` â€” Deletes the 2nd person in the full list (student or staff).
+* `staffslist` then `delete 1` â€” Deletes the 1st teaching staff in the staff list.
+* `find Betsy` then `delete 1` â€” Deletes the 1st person in the find results.
 
 ---
 
@@ -449,7 +482,7 @@ This permanently deletes all contacts and cannot be undone. You will be asked to
 
 ### Double confirmation
 
-Some commands that are **irreversible** — currently `delete` and `clear` — require you to explicitly confirm before they are executed.
+Some commands that are **irreversible** â€” currently `delete` and `clear` â€” require you to explicitly confirm before they are executed.
 
 **How it works:**
 
@@ -498,9 +531,9 @@ Exports all contacts currently listed in the address book to a CSV file. This al
 
 **Examples:**
 
-* `export` — Exports contacts to `./export.csv` (default location).
-* `export f/contacts.csv` — Exports contacts to `contacts.csv` in the current directory.
-* `export f/backup/students.csv` — Exports contacts to `backup/students.csv`.
+* `export` â€” Exports contacts to `./export.csv` (default location).
+* `export f/contacts.csv` â€” Exports contacts to `contacts.csv` in the current directory.
+* `export f/backup/students.csv` â€” Exports contacts to `backup/students.csv`.
 
 ---
 
@@ -527,7 +560,7 @@ Import contacts from the given file path of a **csv file generated by the `expor
 
 **Examples:**
 
-* `import f/./contacts.csv` — Imports all contacts from `contacts.csv`.
+* `import f/./contacts.csv` â€” Imports all contacts from `contacts.csv`.
 
 ---
 
@@ -571,14 +604,14 @@ the data from your previous Doritus home folder.
 
 | Action                 | Format, Examples                                                                                                                                                                                                                 |
 |------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add student**        | `add n/NAME p/PHONE e/EMAIL u/USERNAME [t/TAG]…​` <br> e.g., `add n/James Ho p/82224345 e/jamesho@example.com u/jamesho t/friend`                                                                                                |
-| **Add staff**          | `add staff n/NAME p/PHONE e/EMAIL u/USERNAME [pos/POSITION] [t/TAG]…​` <br> e.g., `add staff n/Jane Smith p/91234567 e/jane@example.com u/janesmith` or `add staff n/Dr Lee p/91234567 e/lee@example.com u/drlee pos/Professors` |
+| **Add student**        | `add n/NAME p/PHONE e/EMAIL u/USERNAME [t/TAG]â€¦â€‹` <br> e.g., `add n/James Ho p/82224345 e/jamesho@example.com u/jamesho t/friend`                                                                                                |
+| **Add staff**          | `add staff n/NAME p/PHONE e/EMAIL u/USERNAME [pos/POSITION] [t/TAG]â€¦â€‹` <br> e.g., `add staff n/Jane Smith p/91234567 e/jane@example.com u/janesmith` or `add staff n/Dr Lee p/91234567 e/lee@example.com u/drlee pos/Professors` |
 | **List all**           | `list`                                                                                                                                                                                                                           |
 | **List staff only**    | `staffslist`                                                                                                                                                                                                                     |
 | **List students only** | `studentslist`                                                                                                                                                                                                                   |
 | **Tutor slot**         | `tutorslot INDEX SLOT` <br> e.g., `tutorslot 1 mon-10-12`                                                                                                                                                                        |
 | **Tutor dashboard**    | `tutordashboard`                                                                                                                                                                                                                 |
-| **Edit**               | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [u/USERNAME] [pos/POSITION] [t/TAG]…​` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` or `edit 1 pos/Professors` (staff only)                                                   |
+| **Edit**               | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [u/USERNAME] [pos/POSITION] [t/TAG]â€¦â€‹` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` or `edit 1 pos/Professors` (staff only)                                                   |
 | **Find**               | `find [KEYWORD [MORE_KEYWORDS]...] [t/TAG [MORE_TAGS]...] [e/EMAIL [MORE_EMAILS]...] [u/USERNAME [USERNAMES]...] [p/PHONE_SEQUENCE [PHONE_SEQUENCES]...]` <br> e.g., `find James Jake t/friends e/james u/jake p/123`            |
 | **Delete**             | `delete INDEX` <br> e.g., `delete 3` (index from current list: full, staff, or students)                                                                                                                                         |
 | **Clear**              | `clear`                                                                                                                                                                                                                          |
