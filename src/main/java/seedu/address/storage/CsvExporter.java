@@ -64,7 +64,7 @@ public class CsvExporter {
         String contents = HEADERS + persons.stream()
                 .map(CsvExporter::convertToCsv)
                 .collect(Collectors.joining("\n"));
-        if (filePath == null || filePath.isBlank()) {
+        if (filePath == null) {
             filePath = DEFAULT_FILE_PATH;
         }
         Path path = Paths.get(filePath);
