@@ -170,13 +170,13 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_answer_yes() throws Exception {
-        Command answerYesCommand = new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.YES);
+        Command answerYesCommand = new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.YES, null);
         assertEquals(answerYesCommand, parser.parseCommand(AnswerConfirmationCommand.COMMAND_WORD_YES));
     }
 
     @Test
     public void parseCommand_answer_no() throws Exception {
-        Command answerYesCommand = new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.NO);
+        Command answerYesCommand = new AnswerConfirmationCommand(AnswerConfirmationCommand.AnswerType.NO, null);
         assertEquals(answerYesCommand, parser.parseCommand(AnswerConfirmationCommand.COMMAND_WORD_NO));
     }
 
