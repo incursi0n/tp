@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
@@ -21,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.exceptions.EditCommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -248,6 +250,42 @@ public class EditCommandTest {
         String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
                 + editPersonDescriptor + "}";
         assertEquals(expected, editCommand.toString());
+    }
+
+    @Test
+    public void constructor_withMessageAndCause_setsBothFields() {
+        String expectedMessage = "Edit failed due to invalid input";
+        Throwable expectedCause = new IllegalArgumentException("Invalid index");
+
+        EditCommandException exception = new EditCommandException(expectedMessage, expectedCause);
+
+        assertEquals(expectedMessage, exception.getMessage());
+        assertSame(expectedCause, exception.getCause());
+    }
+
+    @Test
+    public void constructor_withNullCause_messageStillSet() {
+        String expectedMessage = "Edit failed";
+
+        EditCommandException exception = new EditCommandException(expectedMessage, null);
+
+        assertEquals(expectedMessage, exception.getMessage());
+        assertEquals(null, exception.getCause());
+    }
+
+    @Test
+    public void constructor_withMessageAndCause_isThrowable() {
+        String expectedMessage = "Edit operation failed";
+        Throwable expectedCause = new RuntimeException("Underlying error");
+
+        EditCommandException exception = new EditCommandException(expectedMessage, expectedCause);
+
+        RuntimeException thrown = org.junit.jupiter.api.Assertions.assertThrows(
+                EditCommandException.class, () -> {
+                    throw exception;
+                });
+        assertEquals(expectedMessage, thrown.getMessage());
+        assertSame(expectedCause, thrown.getCause());
     }
 
 }
