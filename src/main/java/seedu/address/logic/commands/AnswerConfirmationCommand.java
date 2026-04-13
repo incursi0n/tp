@@ -33,15 +33,8 @@ public class AnswerConfirmationCommand extends Command {
      */
     public AnswerConfirmationCommand(AnswerType answerType, String args) {
         Objects.requireNonNull(answerType);
-        this.args = args;
+        this.args = args != null && !args.isEmpty() ? args : null;
         this.answerType = args == null || args.isEmpty() ? answerType : AnswerType.ERRONEOUS_ARGUMENTS;
-    }
-
-    /**
-     * @param answerType The type of answer provided by the user.
-     */
-    public AnswerConfirmationCommand(AnswerType answerType) {
-        this(answerType, null);
     }
 
     @Override
@@ -76,7 +69,7 @@ public class AnswerConfirmationCommand extends Command {
         if (!(obj instanceof AnswerConfirmationCommand other)) {
             return false;
         }
-        return this.answerType == other.answerType;
+        return this.answerType == other.answerType && (this.args == null || this.args.equals(other.args));
     }
 
     /**
