@@ -110,13 +110,18 @@ fast, Doritus can get your contact management tasks done faster than traditional
 
 ### Types of tags
 
+**Note:** Tags must be **non-empty**
 - General purpose tags: Alphanumeric characters only (e.g. `examDuty`)
     - Case-insensitive (e.g. `examDuty` and `examduty` are treated as equivalent tags)
 - Special tags: these tags follow a specific format:
     - Tutorial groups: begins with `tut:`, followed by an optional uppercase letter and maximally 2 digits (e.g.
       `tut:A11`, `tut:17`, `tut:2`)
+        - They can optionally be associated with **one** valid `course` separated by a dash (`-`). (e.g. `tut:A11-CS2103T`)
+        - The associated `course` tag does not have to already be assigned to the given person
     - Lab groups: begins with `lab:`, followed by an optional uppercase letter and maximally 2 digits (e.g. `lab:A11`,
       `lab:17`, `lab:2`)
+        - They can optionally be associated with **one** valid `course` separated by a dash (`-`). (e.g. `lab:A11-CS2103T`)
+        - The associated `course` tag does not have to already be assigned to the given person
     - Course: begins with `course:`, followed 2-4 uppercase letters, proceeded by 4 digits and an optional uppercase
       suffix letter (e.g. `course:CS2103`, `course:CS2103T`, `course:GESS1000T`)
 
@@ -371,7 +376,7 @@ Edits an existing person in the address book. For teaching staff, you can also c
 
 Appends tags to an existing person, without having to respecify all existing tags
 
-**Format:** `tag-add INDEX [t/TAG]â€¦`
+**Format:** `tag-add INDEX t/TAG [t/TAG]…`
 
 **Parameters:**
 
@@ -390,15 +395,17 @@ Appends tags to an existing person, without having to respecify all existing tag
 
 * `tag-add 1 t/needsHelp t/course:CS2103T t/tut:10` - Adds tags to indicate that the first visible person is in the
   course CS2103T who resides in tutorial group 10 and needs help
+* `tag-add 1 t/course:CS2103T t/course:CS1231S t/tut:10-CS2103T` - Adds tags to indicate that the first visible person is in the
+  course CS2103T and CS1231S, specifically in tutorial group 10 of the course CS2103T
 
 ### Locating persons by name/tag: `find`
 
 Finds persons whose names contain any of the given keywords and/or who have any of the specified tags.
 
 **Format:**
-`find [KEYWORD [MORE_KEYWORDS]...] [t/TAG [MORE_TAGS]...] [e/EMAIL [MORE_EMAILS]...] [u/USERNAME [USERNAMES]...] [p/PHONE_SEQUENCE [PHONE_SEQUENCEs]...]`
+`find [n/NAME]… [e/EMAIL]… [u/USERNAME]… [p/PHONE]… [t/TAG]…`
 
-**Note:** At least one keyword or tag must be provided.
+**Note:** At least one of NAME, EMAIL, USERNAME, PHONE or TAG must be provided.
 
 **Behavior:**
 
@@ -406,6 +413,8 @@ Finds persons whose names contain any of the given keywords and/or who have any 
     * The order of keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
     * Keywords is matched using substring e.g. `Han` will match `Hans`
     * Persons matching at least one keyword will be returned (i.e. `OR` search)
+    * All name keywords must comply with name constraints. For instance, the keyword must only start and end with alphanumeric character
+    * Refer to [`add`](#adding-a-student-add) command for constraints on names
 
 * **Tag search:** Tags match against person tags (case-insensitive)
     * Persons with at least one matching tag will be returned (i.e. `OR` search)
@@ -416,10 +425,13 @@ Finds persons whose names contain any of the given keywords and/or who have any 
 * **Email search:** Keywords match against person emails (case-insensitive)
     * Persons matching at least one keyword will be returned (i.e. `OR` search)
     * Keywords is matched using substring e.g. `mail` will match `example@gmail.com`
+    * Keywords should be a valid substring of an email
+    * Refer to [`add`](#adding-a-student-add) command for constraints on emails
 
 * **Username search:** Keywords match against person username (case-insensitive)
     * Persons matching at least one keyword will be returned (i.e. `OR` search)
     * Keywords is matched using substring e.g. `ice` will match `alice`
+    * Refer to [`add`](#adding-a-student-add) command for constraints on usernames
 
 * **Phone Sequence search:** Each `p/` value is a **digit-only** sequence used to search within stored phone numbers.
     * Each sequence must be **1 to 8 digits** (no spaces or other characters). Values with more than 8 digits are not
@@ -427,8 +439,10 @@ Finds persons whose names contain any of the given keywords and/or who have any 
     * Matching is by **substring** on the personâ€™s phone: e.g. `456` matches `91234567`.
     * Persons whose phone matches at least one given sequence are returned (i.e. `OR` search across `p/` values).
 
-* **Combined search:** If both keywords and tags are provided, persons must match at least one keyword **AND** at least
-  one tag (i.e. `AND` between name and tag criteria)
+* **Combined search:** If multiple conditions are provided, persons must match at least one keyword in each condition (i.e. `AND` between conditions)
+    * For example, `find n/alex n/bernice e/alexyeoh e/berniceyu` will match the following users:
+      * Name: `Alex Yeoh`, Email: `alexyeoh@example.com` (matches `n/alex` and `e/alexyeoh` only)
+      * Name: `Bernice Yu`, Email: `berniceyu@example.com` (matches `n/bernice` and `e/berniceyu` only)
 
 
 **Examples:**
@@ -610,8 +624,9 @@ the data from your previous Doritus home folder.
 | **List students only** | `studentslist`                                                                                                                                                                                                                   |
 | **Tutor slot**         | `tutorslot INDEX SLOT` <br> e.g., `tutorslot 1 mon-10-12`                                                                                                                                                                        |
 | **Tutor dashboard**    | `tutordashboard`                                                                                                                                                                                                                 |
-| **Edit**               | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [u/USERNAME] [pos/POSITION] [t/TAG]â€¦â€‹` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` or `edit 1 pos/Professors` (staff only)                                                   |
-| **Find**               | `find [KEYWORD [MORE_KEYWORDS]...] [t/TAG [MORE_TAGS]...] [e/EMAIL [MORE_EMAILS]...] [u/USERNAME [USERNAMES]...] [p/PHONE_SEQUENCE [PHONE_SEQUENCES]...]` <br> e.g., `find James Jake t/friends e/james u/jake p/123`            |
+| **Edit**               | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [u/USERNAME] [pos/POSITION] [t/TAG]…​` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` or `edit 1 pos/Professors` (staff only)                                                   |
+| **Add tags**  | `tag-add INDEX t/TAG [t/TAG]…` <br> e.g. `tag-add 1 t/needsHelp t/course:CS2103T t/tut:10` |
+| **Find**               | `find [n/NAME]… [e/EMAIL]… [u/USERNAME]… [p/PHONE]… [t/TAG]…` <br> e.g., `find n/James Jake t/friends e/james u/jake u/james p/123`                                                                                              |
 | **Delete**             | `delete INDEX` <br> e.g., `delete 3` (index from current list: full, staff, or students)                                                                                                                                         |
 | **Clear**              | `clear`                                                                                                                                                                                                                          |
 | **Import**             | `import f/FILE` <br> e.g., `import f/./contacts.csv`                                                                                                                                                                             |
