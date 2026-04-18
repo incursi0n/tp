@@ -73,20 +73,14 @@ fast, Doritus can get your contact management tasks done faster than traditional
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `…`…‹ after them can be used multiple times including zero times.<br>
+* Items with `…` after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `staffslist`,
-  `studentslist`, `tutordashboard`, `exit` and `clear`) will be
-  ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-  e.g. if the command specifies `list 1`, it will be interpreted as `list`.
-  e.g. if the command specifies `staffslist anything`, it will be interpreted as `staffslist`.
-  e.g. if the command specifies `studentslist 1`, it will be interpreted as `studentslist`.
-  e.g. if the command specifies `tutordashboard foo`, it will be interpreted as `tutordashboard`.
+* Input extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `staffslist`,
+  `studentslist`, `tutordashboard`, `exit` and `clear`) will result in a format error.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines
   as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -121,7 +115,7 @@ fast, Doritus can get your contact management tasks done faster than traditional
       `lab:17`, `lab:2`)
         - They can optionally be associated with **one** valid `course` separated by a dash (`-`). (e.g. `lab:A11-CS2103T`)
         - The associated `course` tag does not have to already be assigned to the given person
-    - Course: begins with `course:`, followed 2-4 uppercase letters, proceeded by 4 digits and an optional uppercase
+    - Course: begins with `course:`, followed 2-4 uppercase letters, followed by 4 digits and an optional uppercase
       suffix letter (e.g. `course:CS2103`, `course:CS2103T`, `course:GESS1000T`)
 
 ### Input history
@@ -130,7 +124,8 @@ The `up` and `down` arrow keys can be used to navigate previously entered comman
 
 **Behavior:**
 
-* Only past commands that were successfully executed (did not provide an error) will be accessible
+* Only past commands that were successfully executed (did not produce an error) will be accessible.
+* Only **100** of the most recent successfully executed commands are stored in the history at a time.
 
 ### Viewing help : `help`
 
@@ -159,9 +154,9 @@ Adds a student to the address book.
         * Cannot be empty or only whitespace.
         * Between words, use either:
           * a single space ` `,
-          * hyphen `-`, 
-          * forward slash `/`, 
-          * comma and space `, `, 
+          * hyphen `-`,
+          * forward slash `/`,
+          * comma and space `, `,
           * period and space `. `,
         * Must start with an alphanumeric character.
         * Must end with either alphanumeric character, closing bracket `)` or period `.`.
@@ -317,6 +312,7 @@ available to teach.
 * Time slots are displayed in the UI beneath the staff member's contact details (each slot as its own label, with
   spacing between multiple slots).
 * Time slots are persisted in the data file.
+* Time slots are discrete. i.e. (11:00-12:00, 12:00-13:00) is different from (11:00-13:00)
 * Successful additions are append-only: you can **add** multiple slots with repeated `tutorslot` commands, but there is
   **no command** to edit or remove one slot only. To change slots you may delete the staff contact and re-add them, or
   edit the data file directly (advanced; see [Editing the data file](#editing-the-data-file)).
@@ -371,8 +367,7 @@ Edits an existing person in the address book. For teaching staff, you can also c
 
 * `INDEX`: Must be a positive integer (1, 2, 3, …) referring to the position in the **currently displayed** list.
 * At least one optional field must be provided.
-* `pos/POSITION`: Only applies to teaching staff. Must be `Teaching Assistant` or `Professors` (case-insensitive).
-  Ignored for students.
+* `pos/POSITION`: Only applies to teaching staff. Must be `Teaching Assistant` or `Professors` (case-insensitive). If provided while editing a student, an error will be shown.
 
 **Behavior:**
 
@@ -384,9 +379,9 @@ Edits an existing person in the address book. For teaching staff, you can also c
 * When editing tags, existing tags are replaced (not cumulative). Use `t/` with no value to clear all tags.
   **Examples:**
 
-* `edit 1 p/91234567 e/johndoe@example.com` — Edits the 1st person's phone and email.
-* `edit 2 n/Betsy Crower t/` — Edits the 2nd person's name and clears all tags.
-* `staffslist` then `edit 1 pos/Professors` — Edits the 1st teaching staff's position to Professors.
+  * `edit 1 p/91234567 e/johndoe@example.com` — Edits the 1st person's phone and email.
+  * `edit 2 n/Betsy Crower t/` — Edits the 2nd person's name and clears all tags.
+  * `staffslist` then `edit 1 pos/Professors` — Edits the 1st teaching staff's position to Professors.
 
 ---
 
@@ -465,12 +460,12 @@ Finds persons whose names contain any of the given keywords and/or who have any 
 
 **Examples:**
 
-* `find John` — Returns all persons with "John" in their name
-* `find alex david` — Returns `Alex Yeoh`, `David Li`, and anyone else with "alex" or "david" in their name
+* `find n/John` — Returns all persons with "John" in their name
+* `find n/alex n/david` — Returns `Alex Yeoh`, `David Li`, and anyone else with "alex" or "david" in their name
 * `find t/friends` — Returns all persons tagged with "friends"
 * `find t/colleagues t/important` — Returns all persons tagged with either "colleagues" or "important"
-* `find John t/friends` — Returns persons with "John" in their name who are also tagged with "friends"<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find n/John t/friends` — Returns persons with "John" in their name who are also tagged with "friends"<br>
+  ![result for 'find n/alex n/david'](images/findAlexDavidResult.png)
 
 ---
 
@@ -552,11 +547,12 @@ Exports all contacts currently listed in the address book to a CSV file. This al
 **Parameters:**
 
 * `f/FILE_PATH`: Optional. The file path where contacts should be exported. If not provided, exports to the default
-  location (`./export.csv`).
+  location (`./export.csv`). The root of this file path is the working directory of Doritus, which is represented by `.`.
+  The valid path separator is `/`.
 
 **Behavior:**
-
 * Exports all contacts currently listed (both students and teaching staff) in the current address book to a CSV file.
+* Contacts exported are affected by commands that alter the view of the address book (eg: `list`, `staffslist`, `studentslist`, `list`, `find`)
 * If the file already exists, it will be overwritten.
 * If the directory of the target files does not exist, Doritus will create the directory recursively
 * The CSV file includes contact details such as name, phone, email, username, position, and tags.
@@ -577,7 +573,10 @@ Import contacts from the given file path of a **csv file generated by the `expor
 
 **Parameters:**
 
-* `FILE`: Required. Must be a valid file path to a csv file generated from the `export` command, **i.e, import of any other csv file that is not generated by `export` is not allowed.**
+* `FILE`: Required. Must be a valid file path to a csv file generated from the `export` command,
+  **i.e, import of any other csv file that is not generated by `export` is not allowed.**
+  The root of this file path is the working directory of Doritus, which is represented by `.`.
+  The valid path separator is `/`.
 
 **Behavior:**
 
@@ -586,7 +585,7 @@ Import contacts from the given file path of a **csv file generated by the `expor
 * **Ensure that the csv file path is valid:**
   * If you used `export f/./contacts.csv`, then the path to the csv file is `./contacts.csv`. Thus to import the csv file, use `import f/./contacts.csv`
   * If you used `export`, then the path to the csv file will be the default path, which is `./export.csv`. Thus to import the csv file, use `import f/./export.csv`
-* **Any csv file generated by `export` but tempered with, i.e, edited after running `export`, will be considered invalid format for `import`, thus `import` of such csv files will be not allowed.**
+* **Any csv file generated by `export` but tampered with, i.e, edited after running `export`, will be considered invalid format for `import`, thus `import` of such csv files will be not allowed.**
 * Only the contacts who are not currently in the address book will be added.
 * If an error occurs during the import, none of the contacts from the csv file will be added.
 
